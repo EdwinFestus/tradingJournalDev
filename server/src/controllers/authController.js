@@ -1,6 +1,15 @@
 import User from "../models/User.js"
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+ 
+const generateToken = ( id ) => {
+    return jwt.sign(
+        { id },
+        process.env.JWT_SECRET,
+        { expiresIn: "30d" }
+    );
+}
+
 
 export const registerUser = async (req, res) => {
     try {
@@ -27,6 +36,7 @@ export const registerUser = async (req, res) => {
             id: user._id,
             name: user.name,
             email: user.email,
+            token: generateToken(user._id)
         });
     } catch(err) {
         res.status(500).json({
@@ -42,7 +52,7 @@ export const loginUser = async (req, res) => {
 
         const user = await User.findOne({email});
 
-        if (!user) {
+        if ( !user) {
             return res.status(401).json({
                 message: "Invalid Credentials!!!",
             })
@@ -59,11 +69,15 @@ export const loginUser = async (req, res) => {
                 message: "Invalid Credentials !!!",
             })
         }
+
+        console.log("JWT_SECRET=", process.env.JWT_SECRET );
+        console.log("USER ID=", user._id );
       
         res.status(200).json({
             id: user._id,
             name: user.name,
             email: user.email,
+            token: generateToken(user._id)
         });
     } catch(err) {
         res.status(500).json({

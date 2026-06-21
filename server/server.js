@@ -1,11 +1,16 @@
-import express from "express";
 import dotenv from "dotenv";
+dotenv.config();
+
+console.log("PORT=", process.env.PORT );
+console.log("MONGO_URI", process.env.MONGO_URI );
+console.log("JWT_SECRET=", process.env.JWT_SECRET );
+
+import express from "express";
 import cors from "cors";
 
 import connectDB from "./src/config/db.js";
 import authRoutes from "./src/routes/authRoutes.js"
 
-dotenv.config();
 connectDB();
 const app = express();
 
