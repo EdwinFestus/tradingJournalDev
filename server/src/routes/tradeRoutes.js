@@ -1,8 +1,16 @@
-import express from "expresss";
+import express from "express";
+import protect  from "../middleware/authMiddleware.js"
+
 
 import {
     createTrade, 
-    getTrade, 
+    getTrades, 
 } from "../controllers/tradeController.js";
 
-import protect from "../middleware/authMiddleware.js"
+
+const router = express.Router()
+router.post("/", protect, createTrade);
+router.get("/", protect, getTrades);
+
+
+export default router;

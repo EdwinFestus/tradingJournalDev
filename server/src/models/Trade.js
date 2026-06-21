@@ -11,6 +11,7 @@ const tradeSchema = new mongoose.Schema({
     pair: {
         type: String,
         required: true,
+        trim: true,
     },
 
     orderType: {
@@ -34,20 +35,64 @@ const tradeSchema = new mongoose.Schema({
         required: true,
     },
 
-    outcome: {
-        type: String,
-        enum: ["WIN", "LOSS", "BE"],
-        default: "BE",
+    lotSize: {
+        type: Number,
+        required: true
     },
 
-    rr: {
+    strategy: {
+        type: String,
+        default: "",
+    },
+
+    marketCondition: {
+        type: String,
+        default: "",
+    },
+
+    mood: {
+        type: String,
+        default: "",
+    },
+
+    tradingStyle: {
+        type: String,
+        enum: ["Conservative", "Aggressive"],
+        default: "Conservative",
+    },
+
+    riskAmount: {
         type: Number,
         default: 0,
     },
+
+    rewardAmount: {
+        type: Number,
+        default: 0,
+    },
+    
+    rrRatio: {
+        type: Number,
+        default: 0,
+    },
+
+    setupRating: {
+        type: String,
+        default: 0,
+    },
+    
+    outcome: {
+        type: String,
+        enum: ["WIN", "LOSS", "BE", "OPEN"],
+        default: "OPEN",
+    },
+
 },
     {
         timestamps: true,
     }
 )
 
-export default mongoose.model("Trade", tradeSchema);
+const Trade = mongoose.model("Trade", tradeSchema);
+
+export default Trade;

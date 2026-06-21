@@ -10,6 +10,7 @@ import cors from "cors";
 
 import connectDB from "./src/config/db.js";
 import authRoutes from "./src/routes/authRoutes.js"
+import tradeRoutes from "./src/routes/tradeRoutes.js"
 
 connectDB();
 const app = express();
@@ -29,6 +30,11 @@ app.use(
     "/api/auth",
     authRoutes
 );
+
+app.use(
+    "/api/trades",
+    tradeRoutes
+)
 
 const PORT = process.env.PORT || 5000;
 
