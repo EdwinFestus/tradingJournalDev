@@ -86,6 +86,8 @@ export const getTrades = async ( req, res ) => {
             user: req.user._id,
         }).sort("-createdAt");
 
+        return res.status(200).json(trades);
+
     } catch (err) {
         res.status(500).json({
             massage: err.message,
