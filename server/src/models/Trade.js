@@ -80,10 +80,39 @@ const tradeSchema = new mongoose.Schema({
         type: String,
         default: 0,
     },
+
+    notes: {
+        type: String,
+        default: "",
+    },
+
+    tag: {
+        type: String,
+    },
+
+    exitPrice: {
+        type: Number,
+        default: 0,
+    },
+
+    profitLoss: {
+        type: Number,
+        default: 0,
+    },
+
+    beforeImage: {
+        type: String,
+        default: "",
+    },
+
+    afterImage: {
+        type: String,
+        default: "",
+    },
     
     outcome: {
         type: String,
-        enum: ["WIN", "LOSS", "BE", "OPEN"],
+        enum: ["WIN", "LOSS", "BE", "OPEN", "MANUAL_CLOSE"],
         default: "OPEN",
     },
 

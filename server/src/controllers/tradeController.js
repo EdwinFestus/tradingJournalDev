@@ -95,3 +95,36 @@ export const getTrades = async ( req, res ) => {
     };
 };
 
+export const updateTrade = async ( req, res ) => {
+    try{
+        const trade = await Trade.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            { new: true }
+        );
+
+        res.status(200).json(trade);
+
+    } catch (err) {
+        res.status(500).json({
+            message: err.message,
+        });
+    }
+};
+
+
+export const deleteTrade = async ( req, res ) => {
+    try {
+        await Trade.findByIdAndDelete(
+            req.params.id
+        );
+
+        res.status(200).json({
+            message: "Trade deleted",
+        });
+    } catch (err) {
+        res.status(500).json({
+            massage: err.message,
+        });
+    };
+};
