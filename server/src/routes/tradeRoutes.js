@@ -1,39 +1,34 @@
 import express from "express";
-import protect  from "../middleware/authMiddleware.js"
-
+import protect from "../middleware/authMiddleware.js";
 
 import {
-    createTrade, 
-    getTrades,
-    deleteTrade, 
-    updateTrade, 
+  createTrade,
+  getTrades,
+  getTradeById,
+  updateTrade,
+  deleteTrade,
 } from "../controllers/tradeController.js";
 
+const router = express.Router();
 
-const router = express.Router()
-router.post(
-    "/", 
-    protect, 
-    createTrade
-);
+/**
+ * Create Trade
+ * Get All Trades
+ */
+router
+  .route("/")
+  .post(protect, createTrade)
+  .get(protect, getTrades);
 
-router.get(
-    "/", 
-    protect, 
-    getTrades
-);
-
-router.patch(  
-    "/:id",
-    protect,
-    updateTrade
-);
-
-router.delete(  
-    "/:id",
-    protect,
-    deleteTrade
-);
-
+/**
+ * Get Single Trade
+ * Update Trade
+ * Delete Trade
+ */
+router
+  .route("/:id")
+  .get(protect, getTradeById)
+  .patch(protect, updateTrade)
+  .delete(protect, deleteTrade);
 
 export default router;

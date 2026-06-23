@@ -40,9 +40,30 @@ const tradeSchema = new mongoose.Schema({
         required: true
     },
 
+    accountType: {
+        type: String,
+        enum: [
+            "Personal",
+            "Challenge",
+            "Funded",
+            "Demo",
+        ],
+        default: "Personal",
+    },
+
     strategy: {
         type: String,
-        default: "",
+        enum: [
+            "SMC",
+            "Liquidity Grab",
+            "Trendline Break",
+            "Double Top",
+            "Double Bottom",
+            "Head & Shoulders",
+            "Expansion",
+            "Other",
+        ],
+        default: "Other",
     },
 
     marketCondition: {
@@ -76,9 +97,29 @@ const tradeSchema = new mongoose.Schema({
         default: 0,
     },
 
-    setupRating: {
+    timeframe: {
         type: String,
-        default: 0,
+        enum: [
+            "1M",
+            "5M",
+            "15M",
+            "30M",
+            "1H",
+            "4H",
+            "1D",
+        ],
+    },
+
+    tradeDate: {
+        type: Date,
+        required: true,
+        default: Date.now,
+    },
+
+   setupRating: {
+        type: String,
+        enum: ["STANDARD", "A+", "A++", "ELITE"],
+        default: "STANDARD",
     },
 
     notes: {
