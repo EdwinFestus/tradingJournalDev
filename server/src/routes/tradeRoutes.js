@@ -29,7 +29,7 @@ router.patch(
     updateTrade
 );
 
-router.dalete(  
+router.delete(  
     "/:id",
     protect,
     deleteTrade

@@ -100,7 +100,9 @@ export const updateTrade = async ( req, res ) => {
         const trade = await Trade.findByIdAndUpdate(
             req.params.id,
             req.body,
-            { new: true }
+            { 
+                returnDocument: "after"
+             }
         );
 
         res.status(200).json(trade);
