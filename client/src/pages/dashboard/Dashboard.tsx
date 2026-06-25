@@ -5,6 +5,9 @@ import MonthlyPnLChart from "../../components/dashboard/MonthlyPnLChart";
 import WinRateChart from "../../components/dashboard/WinRateChart";
 import RecentTrades from "../../components/dashboard/RecentTrades";
 import RiskOverview from "../../components/dashboard/RiskOverview";
+import QuickActions from "../../components/dashboard/QuickActions";
+import PerformanceOverview from "../../components/dashboard/PerformanceOverview";
+import ActivityTimeline from "../../components/dashboard/ActivityTimeline";
 
 import {
   TrendingUp,
@@ -69,6 +72,12 @@ export default function Dashboard() {
         </div>
         <RiskOverview />
        </div>
+
+       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8">
+          <QuickActions />
+          <PerformanceOverview />
+          <ActivityTimeline />
+        </div>
 
     </div>
 
