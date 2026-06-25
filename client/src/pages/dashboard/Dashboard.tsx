@@ -3,6 +3,8 @@ import StatCard from "../../components/dashboard/StatCard";
 import EquityChart from "../../components/dashboard/EquityChart";
 import MonthlyPnLChart from "../../components/dashboard/MonthlyPnLChart";
 import WinRateChart from "../../components/dashboard/WinRateChart";
+import RecentTrades from "../../components/dashboard/RecentTrades";
+import RiskOverview from "../../components/dashboard/RiskOverview";
 
 import {
   TrendingUp,
@@ -59,6 +61,14 @@ export default function Dashboard() {
         <MonthlyPnLChart />
         <WinRateChart />
       </div>
+
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 mt-8">
+
+      <div className="xl:col-span-2">
+        <RecentTrades />
+        </div>
+        <RiskOverview />
+       </div>
 
     </div>
 
