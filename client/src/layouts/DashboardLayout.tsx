@@ -4,13 +4,15 @@ import Navbar from "./Navbar";
 
 const DashboardLayout = () => {
   return (
-    <div className="flex bg-slate-50">
+    <div className="flex min-h-screen bg-slate-100">
+      {/* Sidebar */}
       <Sidebar />
 
-      <div className="flex-1 min-h-screen">
+      {/* Main Content */}
+      <div className="flex flex-1 flex-col">
         <Navbar />
 
-        <main className="p-6">
+        <main className="flex-1 overflow-y-auto p-6">
           <Outlet />
         </main>
       </div>
