@@ -15,6 +15,7 @@ const data = [
   { day: "Thu", equity: 140 },
   { day: "Fri", equity: 165 },
   { day: "Sat", equity: 172 },
+  { day: "Sun", equity: 130 },
 ];
 
 export default function EquityChart() {

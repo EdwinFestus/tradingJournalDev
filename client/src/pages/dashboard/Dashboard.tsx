@@ -1,6 +1,8 @@
 import DashboardHeader from "../../components/dashboard/DashboardHeader";
 import StatCard from "../../components/dashboard/StatCard";
-import EquityChart from "../../components/dashboard/EquityChart"
+import EquityChart from "../../components/dashboard/EquityChart";
+import MonthlyPnLChart from "../../components/dashboard/MonthlyPnLChart";
+import WinRateChart from "../../components/dashboard/WinRateChart";
 
 import {
   TrendingUp,
@@ -51,6 +53,11 @@ export default function Dashboard() {
 
       <div className="mt-8">
         <EquityChart />
+      </div>
+
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mt-8">
+        <MonthlyPnLChart />
+        <WinRateChart />
       </div>
 
     </div>
