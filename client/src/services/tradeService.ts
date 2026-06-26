@@ -5,6 +5,7 @@ export const getTrades = async () => {
   return data;
 };
 
+
 export const getTradeById = async (
   id: string
 ) => {
@@ -47,3 +48,16 @@ export const deleteTrade = async (
 
   return data;
 };
+
+
+
+
+
+  // export const getTrades = async () => {
+  //   const response = await api.get("/trades");
+  
+  //   console.log("Trade API Response:", response);
+  //   console.log("Trade API Data:", response.data);
+  
+  //   return response.data;
+  // };

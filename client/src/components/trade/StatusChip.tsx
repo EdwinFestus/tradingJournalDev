@@ -17,7 +17,11 @@ export default function StatusChip({ status }: Props) {
       label={status}
       color={color}
       size="small"
-      variant="filled"
+      sx={{
+        minWidth: 90,
+        fontWeight: 600,
+        borderRadius: 2,
+      }}
     />
   );
 }
