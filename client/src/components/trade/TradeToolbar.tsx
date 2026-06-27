@@ -1,7 +1,6 @@
 import TradeDialog from "./TradeDialog";
 
 import {
-  Add,
   Download,
   FilterList,
   Search,

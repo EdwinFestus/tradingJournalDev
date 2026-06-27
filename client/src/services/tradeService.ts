@@ -1,4 +1,5 @@
 import api from "../lib/api";
+import type { CreateTradeDto } from "../types/createTrade";
 
 export const getTrades = async () => {
   const { data } = await api.get("/trades");
@@ -17,7 +18,7 @@ export const getTradeById = async (
 };
 
 export const createTrade = async (
-  tradeData: Record<string, unknown>
+  tradeData: CreateTradeDto
 ) => {
   const { data } = await api.post(
     "/trades",

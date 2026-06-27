@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import * as tradeService from "../services/tradeService";
 import type { Trade } from "../types/trade"
+import type { CreateTradeDto } from "../types/createTrade";
 
 
 interface TradeStore {
@@ -13,7 +14,7 @@ interface TradeStore {
 
   fetchTrades: () => Promise<void>;
   createTrade: (
-    tradeData: Record<string, unknown>
+     tradeData: CreateTradeDto
   ) => Promise<void>;
 
   updateTrade: (
