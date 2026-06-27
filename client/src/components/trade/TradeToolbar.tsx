@@ -1,3 +1,5 @@
+import TradeDialog from "./TradeDialog";
+
 import {
   Add,
   Download,
@@ -19,10 +21,7 @@ export default function TradeToolbar() {
           </p>
         </div>
 
-        <button className="flex items-center justify-center gap-2 rounded-xl bg-sky-500 hover:bg-sky-600 transition text-white px-5 py-3 font-medium">
-          <Add />
-          New Trade
-        </button>
+        <TradeDialog />
       </div>
 
       <div className="mt-6 flex flex-col gap-4 xl:flex-row xl:items-center">
