@@ -1,7 +1,85 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
 
 @import "tailwindcss";
+
+:root {
+  color: #111827;
+  background: #f6f7f9;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
   font-family: "Inter", sans-serif;
-  background: #F7FAFC;
+  min-width: 320px;
+  margin: 0;
+  background:
+    radial-gradient(circle at top left, rgba(59, 130, 246, 0.08), transparent 28rem),
+    linear-gradient(180deg, #fbfcfe 0%, #f6f7f9 42%, #f3f4f6 100%);
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+@layer components {
+  .surface-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  }
+
+  .panel-heading {
+    color: #111827;
+    font-size: 0.9375rem;
+    font-weight: 650;
+    line-height: 1.5rem;
+    letter-spacing: 0;
+  }
+
+  .eyebrow {
+    color: #6b7280;
+    font-size: 0.75rem;
+    font-weight: 650;
+    line-height: 1rem;
+    text-transform: uppercase;
+  }
+
+  .metric-value {
+    color: #111827;
+    font-family: "Manrope", "Inter", sans-serif;
+    font-size: 1.75rem;
+    font-weight: 800;
+    line-height: 2.25rem;
+    letter-spacing: 0;
+  }
+
+  .icon-button {
+    display: inline-flex;
+    height: 2.25rem;
+    width: 2.25rem;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #4b5563;
+    transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
+  }
+
+  .icon-button:hover {
+    border-color: #cbd5e1;
+    background: #f9fafb;
+    color: #111827;
+  }
 }

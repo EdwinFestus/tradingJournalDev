@@ -1,28 +1,39 @@
 import {
   Search,
   NotificationsNone,
-  DarkMode,
   AccountCircle,
+  KeyboardCommandKey,
 } from "@mui/icons-material";
 
 const Navbar = () => {
   return (
-    <header className="flex h-16 items-center justify-between bg-white/90 backdrop-blur border-b border-slate-200 z-30 px-6 shadow-sm left-72 right-0 ">
-      <h2 className="text-xl font-semibold">
-        Dashboard
-      </h2>
+    <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-slate-200/80 bg-white/80 px-8 backdrop-blur-xl">
+      <div className="flex items-center gap-3">
+        <span className="h-2 w-2 rounded-full bg-emerald-500" />
+        <span className="text-sm font-semibold text-slate-700">
+          Live workspace
+        </span>
+      </div>
 
-      <div className="flex items-center gap-5">
-        <Search className="cursor-pointer" />
+      <div className="flex items-center gap-3">
+        <button className="hidden h-9 min-w-72 items-center justify-between rounded-lg border border-slate-200 bg-white px-3 text-sm text-slate-500 shadow-sm transition hover:border-slate-300 lg:flex">
+          <span className="flex items-center gap-2">
+            <Search sx={{ fontSize: 18 }} />
+            Search trades, reports, setups
+          </span>
 
-        <NotificationsNone className="cursor-pointer" />
+          <span className="flex items-center gap-1 rounded-md border border-slate-200 px-1.5 py-0.5 text-xs text-slate-400">
+            <KeyboardCommandKey sx={{ fontSize: 13 }} /> K
+          </span>
+        </button>
 
-        <DarkMode className="cursor-pointer" />
+        <button className="icon-button" aria-label="Notifications">
+          <NotificationsNone sx={{ fontSize: 20 }} />
+        </button>
 
-        <AccountCircle
-          sx={{ fontSize: 36 }}
-          className="cursor-pointer"
-        />
+        <button className="icon-button" aria-label="Account">
+          <AccountCircle sx={{ fontSize: 22 }} />
+        </button>
       </div>
     </header>
   );
