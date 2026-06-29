@@ -47,31 +47,54 @@ export default function TradeTable() {
           }}
           disableRowSelectionOnClick
           sx={{
-            border: 0,
-            color: "#334155",
-            fontFamily: "Inter, sans-serif",
-            "& .MuiDataGrid-columnHeaders": {
-              backgroundColor: "#f8fafc",
-              borderBottom: "1px solid #e5e7eb",
-            },
-            "& .MuiDataGrid-columnHeaderTitle": {
-              color: "#64748b",
-              fontSize: 12,
-              fontWeight: 700,
-              textTransform: "uppercase",
-            },
-            "& .MuiDataGrid-cell": {
-              borderBottom: "1px solid #f1f5f9",
-              fontSize: 14,
-            },
-            "& .MuiDataGrid-row:hover": {
-              backgroundColor: "#f8fafc",
-            },
-            "& .MuiDataGrid-footerContainer": {
-              borderTop: "1px solid #e5e7eb",
-            },
-          }}
-        />
+                border: 0,
+                color: "#334155",
+                fontFamily: "Inter, sans-serif",
+
+                "& .MuiDataGrid-columnHeaders": {
+                  backgroundColor: "#f8fafc",
+                  borderBottom: "1px solid #e5e7eb",
+                },
+
+                "& .MuiDataGrid-columnHeader": {
+                  paddingLeft: "24px",
+                  paddingRight: "24px",
+                },
+
+                "& .MuiDataGrid-columnHeaderTitle": {
+                  color: "#64748b",
+                  fontSize: 12,
+                  fontWeight: 700,
+                  textTransform: "uppercase",
+                },
+
+                "& .MuiDataGrid-cell": {
+                  borderBottom: "1px solid #f1f5f9",
+                  fontSize: 14,
+                  paddingLeft: "24px",
+                  paddingRight: "24px",
+                  display: "flex",
+                  alignItems: "center",
+                },
+
+                "& .MuiDataGrid-row": {
+                  minHeight: "60px !important",
+                  maxHeight: "60px !important",
+                },
+
+                "& .MuiDataGrid-columnHeadersInner": {
+                  paddingLeft: "0px",
+                },
+
+                "& .MuiDataGrid-row:hover": {
+                  backgroundColor: "#f8fafc",
+                },
+
+                "& .MuiDataGrid-footerContainer": {
+                  borderTop: "1px solid #e5e7eb",
+                },
+              }}
+                      />
       </div>
     </section>
   );

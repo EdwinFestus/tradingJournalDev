@@ -1,4 +1,5 @@
 import useDashboard from "../hooks/useDashboard";
+import type { Trade } from "../../../shared/types/trade"; // only if needed
 
 const currencyFormatter = new Intl.NumberFormat("en-US", {
   currency: "USD",
@@ -6,7 +7,7 @@ const currencyFormatter = new Intl.NumberFormat("en-US", {
 });
 
 export default function RecentTrades() {
-  const { dashboard } = useDashboard();
+  const { recentTrades } = useDashboard();
 
   return (
     <section className="surface-card overflow-hidden">
@@ -21,7 +22,7 @@ export default function RecentTrades() {
         </div>
 
         <span className="rounded-md bg-slate-100 px-2 py-1 text-xs font-semibold text-slate-600">
-          {dashboard.recentTrades.length} shown
+          {recentTrades.length} shown
         </span>
       </div>
 
@@ -37,7 +38,7 @@ export default function RecentTrades() {
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
-            {dashboard.recentTrades.map((trade) => (
+            {recentTrades.map((trade) => (
               <tr key={trade._id} className="transition hover:bg-slate-50">
                 <td className="px-5 py-4 font-semibold text-slate-950">
                   {trade.pair}

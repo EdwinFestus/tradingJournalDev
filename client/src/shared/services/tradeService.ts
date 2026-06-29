@@ -8,6 +8,7 @@ export const getTrades = async () => {
 
 
 export const getTradeById = async (
+
   id: string
 ) => {
   const { data } = await api.get(

@@ -8,38 +8,21 @@ import {
   YAxis,
 } from "recharts";
 
-import useDashboard from "../hooks/useDashboard";
+interface MonthlyPnLChartProps {
+  data: {
+    month: string;
+    pnl: number;
+  }[];
+}
 
-export default function MonthlyPnLChart() {
-  const { trades } = useDashboard();
-
-  const monthlyProfit = trades.reduce<
-    { month: string; profit: number }[]
-  >((acc, trade) => {
-    const month = new Date(trade.createdAt).toLocaleString("default", {
-      month: "short",
-    });
-
-    const existing = acc.find((item) => item.month === month);
-
-    if (existing) {
-      existing.profit += trade.profitLoss;
-    } else {
-      acc.push({
-        month,
-        profit: trade.profitLoss,
-      });
-    }
-
-    return acc;
-  }, []);
-
+export default function MonthlyPnLChart({
+  data,
+}: MonthlyPnLChartProps) {
   return (
     <section className="surface-card p-5">
       <div className="mb-5">
-        <p className="panel-heading">
-          Monthly P&L
-        </p>
+        <p className="panel-heading">Monthly P&L</p>
+
         <p className="mt-1 text-sm text-slate-500">
           Profit and loss grouped by close month.
         </p>
@@ -48,21 +31,39 @@ export default function MonthlyPnLChart() {
       <div className="h-72">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
-            data={monthlyProfit}
+            data={data}
             margin={{ top: 8, right: 8, left: 0, bottom: 0 }}
           >
-            <CartesianGrid stroke="#e5e7eb" vertical={false} />
-            <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fill: "#64748b", fontSize: 12 }} />
-            <YAxis axisLine={false} tickLine={false} tick={{ fill: "#64748b", fontSize: 12 }} width={56} />
+            <CartesianGrid
+              stroke="#e5e7eb"
+              vertical={false}
+            />
+
+            <XAxis
+              dataKey="month"
+              axisLine={false}
+              tickLine={false}
+              tick={{ fill: "#64748b", fontSize: 12 }}
+            />
+
+            <YAxis
+              axisLine={false}
+              tickLine={false}
+              tick={{ fill: "#64748b", fontSize: 12 }}
+              width={56}
+            />
+
             <Tooltip
               contentStyle={{
                 border: "1px solid #e5e7eb",
                 borderRadius: 8,
-                boxShadow: "0 12px 30px rgba(15, 23, 42, 0.08)",
+                boxShadow:
+                  "0 12px 30px rgba(15,23,42,0.08)",
               }}
             />
+
             <Bar
-              dataKey="profit"
+              dataKey="pnl"
               fill="#111827"
               radius={[4, 4, 0, 0]}
               maxBarSize={44}

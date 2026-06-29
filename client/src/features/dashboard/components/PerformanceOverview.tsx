@@ -1,24 +1,24 @@
 import useDashboard from "../hooks/useDashboard";
 
 export default function PerformanceOverview() {
-  const { dashboard } = useDashboard();
+  const { analytics } = useDashboard();
 
   const metrics = [
     {
       label: "Win rate",
-      value: `${dashboard.winRate}%`,
+      value: `${analytics.winRate.toFixed(1)}%`,
     },
     {
       label: "Total trades",
-      value: dashboard.totalTrades,
+      value: analytics.totalTrades,
     },
     {
       label: "Profit factor",
-      value: dashboard.profitFactor,
+      value: analytics.profitFactor.toFixed(2),
     },
     {
       label: "Portfolio",
-      value: `$${dashboard.portfolio.toFixed(2)}`,
+      value: `$${analytics.netProfit.toFixed(2)}`,
     },
   ];
 
