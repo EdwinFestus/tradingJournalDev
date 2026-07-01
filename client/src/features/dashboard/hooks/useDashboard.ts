@@ -1,38 +1,71 @@
-import { useMemo } from "react";
-import { useTradeStore } from "../../../shared/store/tradeStore";
-import {
-  calculateAnalytics,
-  monthlyPnL,
-} from "../../../shared/services/analyticsService";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+import * as dashboardService from "../services/dashboardService";
+
+import type { DashboardResponse } from "../types/dashboard.types";
 
 export default function useDashboard() {
-  const { trades, loading } = useTradeStore();
+  const [dashboard, setDashboard] =
+    useState<DashboardResponse | null>(null);
 
-  const analytics = useMemo(
-    () => calculateAnalytics(trades),
-    [trades]
-  );
+  const [loading, setLoading] =
+    useState(true);
 
-  const monthlyChart = useMemo(
-    () => monthlyPnL(trades),
-    [trades]
-  );
+  const [error, setError] =
+    useState<string | null>(null);
 
-  const recentTrades = useMemo(() => {
-    return [...trades]
-      .sort(
-        (a, b) =>
-          new Date(b.createdAt).getTime() -
-          new Date(a.createdAt).getTime()
-      )
-      .slice(0, 5);
-  }, [trades]);
+  useEffect(() => {
+    const loadDashboard = async () => {
+      try {
+        setLoading(true);
+
+        const data =
+          await dashboardService.getDashboard();
+
+        setDashboard(data);
+
+        setError(null);
+      } catch (error: unknown) {
+        if (axios.isAxiosError(error)) {
+          setError(
+            error.response?.data?.message ??
+              "Failed to load dashboard."
+          );
+        } else {
+          setError("Failed to load dashboard.");
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    void loadDashboard();
+  }, []);
 
   return {
+    dashboard,
+
+    portfolio: dashboard?.portfolio,
+
+    analytics: dashboard?.analytics,
+
+    charts: dashboard?.charts,
+
+    recentTrades:
+      dashboard?.recentTrades ?? [],
+
+    streak:
+      dashboard?.streak,
+
+    insights:
+      dashboard?.insights ?? [],
+
+    drawdown:
+      dashboard?.drawdown ?? 0,
+
     loading,
-    trades,
-    analytics,
-    monthlyChart,
-    recentTrades,
+
+    error,
   };
 }

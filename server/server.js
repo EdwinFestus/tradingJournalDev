@@ -11,6 +11,7 @@ import cors from "cors";
 import connectDB from "./src/config/db.js";
 import authRoutes from "./src/routes/authRoutes.js"
 import tradeRoutes from "./src/routes/tradeRoutes.js"
+import dashboardRoutes from "./src/routes/dashboardRoutes.js";
 
 connectDB();
 const app = express();
@@ -25,6 +26,12 @@ app.use(cors());
 app.get("/", (req, res) => {
     res.send("Trading Journal API Running");
 })
+
+
+app.use(
+    "/api/dashboard", 
+    dashboardRoutes
+);
 
 app.use(
     "/api/auth",

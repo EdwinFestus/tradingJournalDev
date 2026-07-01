@@ -4,7 +4,7 @@ import {
   Search,
 } from "@mui/icons-material";
 
-import TradeDialog from "./TradeDialog";
+import TradeDialog from "../../../features/trade/components/TradeDialog";
 
 export default function TradeToolbar() {
   return (

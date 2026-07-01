@@ -198,6 +198,65 @@ export const updateTrade = async (req, res) => {
   }
 };
 
+export const closeTrade = async (req, res) => {
+  try {
+    const trade = await Trade.findOne({
+      _id: req.params.id,
+      user: req.user._id,
+    });
+
+    if (!trade) {
+      return res.status(404).json({
+        message: "Trade not found",
+      });
+    }
+
+    const {
+      exitPrice,
+      commission = 0,
+      slippage = 0,
+    } = req.body;
+
+    const exit = Number(exitPrice);
+
+    let pnl = 0;
+
+    if (trade.orderType === "BUY") {
+      pnl =
+        (exit - trade.entry) *
+        trade.lotSize;
+    } else {
+      pnl =
+        (trade.entry - exit) *
+        trade.lotSize;
+    }
+
+    pnl -= commission;
+    pnl -= slippage;
+
+    trade.exitPrice = exit;
+
+    trade.profitLoss =
+      Number(pnl.toFixed(2));
+
+    if (pnl > 0)
+      trade.outcome = "WIN";
+    else if (pnl < 0)
+      trade.outcome = "LOSS";
+    else
+      trade.outcome = "BE";
+
+    await trade.save();
+
+    res.json(trade);
+  } catch (err) {
+    res.status(500).json({
+      message: err.message,
+    });
+  }
+};
+
+
 /**
  * Delete Trade
  */

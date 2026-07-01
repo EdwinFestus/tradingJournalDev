@@ -1,19 +1,31 @@
-import useDashboard from "../hooks/useDashboard";
+import type {
+  Analytics,
+  Insight,
+  Streak,
+} from "../types/dashboard.types";
 
-export default function PerformanceOverview() {
-  const { analytics } = useDashboard();
+interface PerformanceOverviewProps {
+  analytics: Analytics;
+  streak?: Streak;
+  insights?: Insight[];
+}
 
+export default function PerformanceOverview({
+  analytics,
+  streak,
+  insights = [],
+}: PerformanceOverviewProps) {
   const metrics = [
     {
-      label: "Win rate",
+      label: "Win Rate",
       value: `${analytics.winRate.toFixed(1)}%`,
     },
     {
-      label: "Total trades",
+      label: "Total Trades",
       value: analytics.totalTrades,
     },
     {
-      label: "Profit factor",
+      label: "Profit Factor",
       value: analytics.profitFactor.toFixed(2),
     },
     {
@@ -26,8 +38,9 @@ export default function PerformanceOverview() {
     <section className="surface-card p-5 lg:col-span-2">
       <div className="mb-5">
         <p className="panel-heading">
-          Performance snapshot
+          Performance Snapshot
         </p>
+
         <p className="mt-1 text-sm text-slate-500">
           High-level account health indicators.
         </p>
@@ -37,16 +50,53 @@ export default function PerformanceOverview() {
         {metrics.map((metric) => (
           <div
             key={metric.label}
-            className="rounded-lg border border-slate-100 bg-slate-50/70 p-4"
+            className="rounded-lg border border-slate-100 bg-slate-50/70 p-4 dark:border-slate-700 dark:bg-slate-800"
           >
             <p className="text-xs font-semibold uppercase text-slate-500">
               {metric.label}
             </p>
-            <p className="mt-2 text-lg font-bold text-slate-950">
+
+            <p className="mt-2 text-lg font-bold">
               {metric.value}
             </p>
           </div>
         ))}
+      </div>
+
+      <div className="mt-6 grid gap-4 md:grid-cols-2">
+        <div className="rounded-lg border border-slate-100 p-4 dark:border-slate-700">
+          <p className="text-sm font-semibold">
+            Current Streak
+          </p>
+
+          <p className="mt-2 text-xl font-bold">
+            {streak
+              ? `${streak.type} (${streak.count})`
+              : "No streak"}
+          </p>
+        </div>
+
+        <div className="rounded-lg border border-slate-100 p-4 dark:border-slate-700">
+          <p className="text-sm font-semibold">
+            Latest Insight
+          </p>
+
+          {insights.length > 0 ? (
+            <>
+              <p className="mt-2 font-semibold">
+                {insights[0].title}
+              </p>
+
+              <p className="mt-1 text-sm text-slate-500">
+                {insights[0].description}
+              </p>
+            </>
+          ) : (
+            <p className="mt-2 text-sm text-slate-500">
+              No insights available.
+            </p>
+          )}
+        </div>
       </div>
     </section>
   );

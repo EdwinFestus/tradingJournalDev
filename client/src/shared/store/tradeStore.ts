@@ -13,6 +13,7 @@ interface TradeStore {
   ) => Promise<void>;
 
   fetchTrades: () => Promise<void>;
+
   createTrade: (
      tradeData: CreateTradeDto
   ) => Promise<void>;
@@ -54,11 +55,17 @@ export const useTradeStore = create<TradeStore>(
         }
       },
 
+
+      // =============== Delete Trade ================
       deleteTrade: async (id) => {
 
           try {
 
               await tradeService.deleteTrade(id);
+
+              console.log(`=======================`)
+              console.log(`Trade with the __id: ${id} has been deleted Successfully`)
+              console.log(`=======================`)
 
               const trades =
                   await tradeService.getTrades();
@@ -74,6 +81,8 @@ export const useTradeStore = create<TradeStore>(
           }
 
       },
+
+      // Update Trades 
 
       updateTrade: async (
           id,

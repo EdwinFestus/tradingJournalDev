@@ -6,6 +6,7 @@ import {
   getTrades,
   getTradeById,
   updateTrade,
+  closeTrade,
   deleteTrade,
 } from "../controllers/tradeController.js";
 
@@ -30,5 +31,12 @@ router
   .get(protect, getTradeById)
   .patch(protect, updateTrade)
   .delete(protect, deleteTrade);
+
+
+router.patch(
+    "/:id/close",
+    protect,
+    closeTrade
+);
 
 export default router;

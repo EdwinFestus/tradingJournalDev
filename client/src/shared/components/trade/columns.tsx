@@ -1,7 +1,7 @@
 import type { GridColDef } from "@mui/x-data-grid";
 
 import StatusChip from "./StatusChip";
-import TradeActions from "./TradeActions";
+import TradeActions from "../../../features/trade/components/TradeActions";
 
 export const tradeColumns: GridColDef[] = [
   {
@@ -29,7 +29,7 @@ export const tradeColumns: GridColDef[] = [
   },
   {
     field: "rewardAmount",
-    headerName: "Result",
+    headerName: "Reward",
     width: 120,
     valueFormatter: (value: number) =>
       new Intl.NumberFormat("en-US", {

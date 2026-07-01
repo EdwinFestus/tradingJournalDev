@@ -1,11 +1,18 @@
 import type { ReactNode } from "react";
 
 interface StatCardProps {
-  title: string;
-  value: string | number;
-  icon: ReactNode;
-  change: string;
-  positive?: boolean;
+    title: string;
+    value: string | number;
+    change: string;
+    icon: React.ReactNode;
+
+    subtitle?: string;
+
+    loading?: boolean;
+
+    trend?: "up" | "down";
+
+    accent?: "blue" | "green" | "purple" | "orange";
 }
 
 export default function StatCard({

@@ -38,6 +38,26 @@ export const updateTrade = async (
     tradeData
   );
 
+  console.log(tradeData);
+  console.log(data);
+
+  return data;
+};
+
+
+export const closeTrade = async (
+  id: string,
+  tradeData: {
+    exitPrice: number;
+    commission?: number;
+    slippage?: number;
+  }
+) => {
+  const { data } = await api.patch(
+    `/trades/${id}/close`,
+    tradeData
+  );
+
   return data;
 };
 
