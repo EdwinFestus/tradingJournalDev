@@ -1,168 +1,339 @@
-import mongoose from "mongoose";
+    import mongoose from "mongoose";
 
 
-const tradeSchema = new mongoose.Schema({
-    user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        required: true,
-    },
+    const tradeSchema = new mongoose.Schema({
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            required: true,
+        },
 
-    pair: {
-        type: String,
-        required: true,
-        trim: true,
-    },
+        pair: {
+            type: String,
+            required: true,
+            trim: true,
+        },
 
-    orderType: {
-        type: String,
-        enum: ["BUY", "SELL"],
-        required: true,
-    },
+        orderType: {
+            type: String,
+            enum: ["BUY", "SELL"],
+            required: true,
+        },
 
-    entry: {
-        type: Number,
-        required: true,
-    },
+        entry: {
+            type: Number,
+            required: true,
+        },
 
-    stopLoss: {
-        type: Number, 
-        required: true,
-    },
+        stopLoss: {
+            type: Number, 
+            required: true,
+        },
 
-    takeProfit: {
-        type: Number,
-        required: true,
-    },
+        takeProfit: {
+            type: Number,
+            required: true,
+        },
 
-    lotSize: {
-        type: Number,
-        required: true
-    },
+        lotSize: {
+            type: Number,
+            required: true
+        },
 
-    accountType: {
-        type: String,
-        enum: [
-            "Personal",
-            "Challenge",
-            "Funded",
-            "Demo",
-        ],
-        default: "Personal",
-    },
+        accountType: {
+            type: String,
+            enum: [
+                "Personal",
+                "Challenge",
+                "Funded",
+                "Demo",
+            ],
+            default: "Personal",
+        },
 
-    strategy: {
-        type: String,
-        enum: [
-            "SMC",
-            "Liquidity Grab",
-            "Trendline Break",
-            "Double Top",
-            "Double Bottom",
-            "Head & Shoulders",
-            "Expansion",
-            "Other",
-        ],
-        default: "Other",
-    },
+        strategy: {
+            type: String,
+            enum: [
+                "SMC",
+                "Liquidity Grab",
+                "Trendline Break",
+                "Double Top",
+                "Double Bottom",
+                "Head & Shoulders",
+                "Expansion",
+                "Other",
+            ],
+            default: "Other",
+        },
 
-    marketCondition: {
-        type: String,
-        default: "",
-    },
+        marketCondition: {
+            type: String,
+            default: "",
+        },
 
-    mood: {
-        type: String,
-        default: "",
-    },
+        mood: {
+            type: String,
+            default: "",
+        },
 
-    tradingStyle: {
-        type: String,
-        enum: ["Conservative", "Aggressive"],
-        default: "Conservative",
-    },
+        tradingStyle: {
+            type: String,
+            enum: ["Conservative", "Aggressive"],
+            default: "Conservative",
+        },
 
-    riskAmount: {
-        type: Number,
-        default: 0,
-    },
+        riskAmount: {
+            type: Number,
+            default: 0,
+        },
 
-    rewardAmount: {
-        type: Number,
-        default: 0,
-    },
-    
-    rrRatio: {
-        type: Number,
-        default: 0,
-    },
+        rewardAmount: {
+            type: Number,
+            default: 0,
+        },
+        
+        rrRatio: {
+            type: Number,
+            default: 0,
+        },
 
-    timeframe: {
-        type: String,
-        enum: [
-            "1M",
-            "5M",
-            "15M",
-            "30M",
-            "1H",
-            "4H",
-            "1D",
-        ],
-    },
+        timeframe: {
+            type: String,
+            enum: [
+                "1M",
+                "5M",
+                "15M",
+                "30M",
+                "1H",
+                "4H",
+                "1D",
+            ],
+        },
 
-    tradeDate: {
-        type: Date,
-        required: true,
-        default: Date.now,
-    },
+        tradeDate: {
+            type: Date,
+            required: true,
+            default: Date.now,
+        },
 
-   setupRating: {
-        type: String,
-        enum: ["STANDARD", "A+", "A++", "ELITE"],
-        default: "STANDARD",
-    },
+        setupRating: {
+            type: String,
+            enum: ["STANDARD", "A+", "A++", "ELITE"],
+            default: "STANDARD",
+        },
 
-    notes: {
-        type: String,
-        default: "",
-    },
+        notes: {
+            type: String,
+            default: "",
+        },
 
-    tag: {
-        type: String,
-    },
+        deletedAt: {
+            type: Date,
+        },
 
-    exitPrice: {
-        type: Number,
-        default: 0,
-    },
+        isDeleted: {
+            type: Boolean,
+            default: false,
+        },
 
-    profitLoss: {
-        type: Number,
-        default: 0,
-    },
+        tag: {
+            type: String,
+        },
 
-    beforeImage: {
-        type: String,
-        default: "",
-    },
+        exitPrice: {
+            type: Number,
+            default: 0,
+        },
 
-    afterImage: {
-        type: String,
-        default: "",
-    },
-    
-    outcome: {
-        type: String,
-        enum: ["WIN", "LOSS", "BE", "OPEN", "MANUAL_CLOSE"],
-        default: "OPEN",
-    },
+        profitLoss: {
+            type: Number,
+            default: 0,
+        },
 
-},
-    {
-        timestamps: true,
+        beforeImage: {
+            type: String,
+            default: "",
+        },
+
+        afterImage: {
+            type: String,
+            default: "",
+        },
+        
+        status: {
+            type: String,
+            enum: ["OPEN", "CLOSED", "ARCHIVED"],
+            default: "OPEN",
+        },
+
+        outcome: {
+            type: String,
+            enum: ["WIN", "LOSS", "BE", "MANUAL_CLOSE"],
+            default: null,
+        },
+
+        isPartialClose:{
+
+            type:Boolean,
+
+            default:false
+
+        },
+
+        session:{
+
+                type:String,
+
+                enum:[
+
+                "ASIAN",
+
+                "LONDON",
+
+                "NEW_YORK",
+
+                "OVERLAP"
+
+                ]
+
+                },
+
+
+        source:{
+
+            type:String,
+
+            enum:[
+
+            "MANUAL",
+
+            "MT5",
+
+            "BYBIT",
+
+            "BINANCE"
+
+            ],
+
+            default:"MANUAL"
+
+            },
+
+            commission:{
+
+                    type:Number,
+
+                    default:0
+
+                    },
+
+                    swap:{
+
+                    type:Number,
+
+                    default:0
+
+                    },
+
+        exitReason: {
+                type: String,
+                enum: [
+                    "TAKE_PROFIT",
+                    "STOP_LOSS",
+                    "MANUAL",
+                    "TIME_EXIT",
+                    "TRAILING_STOP",
+                ],
+            },
+
+        closedAt: {
+            type: Date,
+        },
+
+        holdingTimeMinutes: {
+            type: Number,
+            default: 0,
+        },
+    },
+        {
+            timestamps: true,
+
+            toJSON: {
+                virtuals: true,
+            },
+
+            toObject: {
+                virtuals: true,
+            },
+
+            optimisticConcurrency: true,
+                    
+        }
+    )
+
+
+
+tradeSchema.index({ user: 1 });
+
+tradeSchema.index({ user: 1, status: 1 });
+
+tradeSchema.index({ user: 1, tradeDate: -1 });
+
+tradeSchema.index({ user: 1, strategy: 1 });
+
+tradeSchema.index({ user: 1, pair: 1 });
+
+tradeSchema.index({ outcome: 1 });
+
+tradeSchema.index({ isDeleted: 1 });
+
+
+tradeSchema.virtual("isClosed").get(function () {
+    return this.status === "CLOSED";
+});
+
+
+tradeSchema.pre("validate", function (next) {
+    if (this.orderType === "BUY") {
+        if (this.stopLoss >= this.entry) {
+            return next(new Error("BUY trades require stopLoss below entry."));
+        }
+
+        if (this.takeProfit <= this.entry) {
+            return next(new Error("BUY trades require takeProfit above entry."));
+        }
     }
-)
 
-const Trade = mongoose.model("Trade", tradeSchema);
+    if (this.orderType === "SELL") {
+        if (this.stopLoss <= this.entry) {
+            return next(new Error("SELL trades require stopLoss above entry."));
+        }
 
-export default Trade;
+        if (this.takeProfit >= this.entry) {
+            return next(new Error("SELL trades require takeProfit below entry."));
+        }
+    }
+
+    next();
+});
+
+tradeSchema.pre("save", function (next) {
+    const risk = Math.abs(this.entry - this.stopLoss);
+    const reward = Math.abs(this.takeProfit - this.entry);
+
+    this.riskAmount = risk;
+    this.rewardAmount = reward;
+    this.rrRatio =
+        risk === 0
+            ? 0
+            : Number((reward / risk).toFixed(2));
+
+    next();
+});
+
+
+
+
+    const Trade = mongoose.model("Trade", tradeSchema);
+
+    export default Trade;

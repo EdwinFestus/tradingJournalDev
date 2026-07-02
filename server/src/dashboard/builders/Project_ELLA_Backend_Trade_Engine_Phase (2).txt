@@ -1,0 +1,50 @@
+Project ELLA – Backend Trade Engine Completion
+
+OBJECTIVE Complete the backend trade lifecycle so the backend becomes
+the single source of truth.
+
+FOLDER STRUCTURE server/src/ - analytics/ - dashboard/ -
+dashboardBuilder.js - portfolioBuilder.js - chartBuilder.js -
+insightBuilder.js - streakBuilder.js - repositories/ -
+tradeRepository.js - services/ - tradeService.js - dashboardService.js -
+utils/ - tradeCalculations.js - controllers/
+
+REPOSITORY LAYER - findByUser(userId) - findById(id) -
+createTrade(data) - updateTrade(id, updates) - deleteTrade(id) -
+closeTrade(id, updates)
+
+TRADE SERVICE Responsibilities: - Validate ownership - Validate OPEN
+state - Calculate RR - Calculate Profit/Loss - Determine WIN / LOSS /
+BE - Calculate holding time - Persist trade - Rebuild dashboard snapshot
+
+Standard response: { success: true, trade: {}, dashboard: {} }
+
+SHARED CALCULATIONS - calculateRR() - calculateProfitLoss() -
+determineOutcome() - calculateHoldingTime() - calculateWinRate() -
+calculateProfitFactor() - calculateExpectancy() - calculateDrawdown()
+
+DASHBOARD BUILDER Assemble: - portfolio - analytics - charts - streak -
+insights - recentTrades
+
+PORTFOLIO BUILDER Calculate: - Net Profit - Gross Profit - Gross Loss -
+Equity - Balance - ROI - Profit Factor - Average RR
+
+CHART BUILDER Return: - equityCurve - monthlyPnL - winRateTrend -
+drawdownCurve
+
+STREAK BUILDER Return: - currentWin - bestWin - currentLoss - worstLoss
+
+INSIGHT BUILDER Generate: - Best strategy - Worst strategy - Best pair -
+Worst pair - Highest RR - Lowest RR - Best trading session - Most
+profitable day
+
+CLOSE TRADE WORKFLOW 1. Validate request 2. Load trade 3. Ensure trade
+is OPEN 4. Calculate Profit/Loss 5. Calculate holding time 6. Determine
+outcome 7. Save trade 8. Rebuild dashboard 9. Return updated dashboard
+snapshot
+
+DEFINITION OF DONE - Repository layer complete - Trade service owns
+business rules - Controllers remain thin - Dashboard builder
+centralized - Analytics reusable - Close Trade implemented - Every
+mutation returns updated dashboard snapshot - Frontend only renders
+backend snapshot

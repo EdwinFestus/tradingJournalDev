@@ -2,12 +2,14 @@ import express from "express";
 import protect from "../middleware/authMiddleware.js";
 
 import {
-  createTrade,
-  getTrades,
-  getTradeById,
-  updateTrade,
-  closeTrade,
-  deleteTrade,
+    getTrades,
+    getTrade,
+    createTrade,
+    updateTrade,
+    closeTrade,
+    archiveTrade,
+    restoreTrade,
+    deleteTrade,
 } from "../controllers/tradeController.js";
 
 const router = express.Router();
@@ -28,7 +30,7 @@ router
  */
 router
   .route("/:id")
-  .get(protect, getTradeById)
+  .get(protect, getTrade)
   .patch(protect, updateTrade)
   .delete(protect, deleteTrade);
 
@@ -38,5 +40,15 @@ router.patch(
     protect,
     closeTrade
 );
+
+/**
+ * PATCH /api/trades/:id/archive
+ */
+router.patch(
+    "/:id/archive",
+    protect,
+    archiveTrade
+);
+
 
 export default router;

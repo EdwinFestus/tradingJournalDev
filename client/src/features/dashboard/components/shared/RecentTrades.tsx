@@ -1,4 +1,4 @@
-import type { Trade } from "../../../shared/types/trade";
+import type { Trade } from "../../../../shared/types/trade";
 
 interface RecentTradesProps {
   trades: Trade[];

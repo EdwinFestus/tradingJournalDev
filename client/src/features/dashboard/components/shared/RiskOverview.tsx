@@ -5,7 +5,7 @@ import {
   Warning,
 } from "@mui/icons-material";
 
-import type { Analytics } from "../types/dashboard.types";
+import type { Analytics } from "../../types/dashboard.types";
 
 interface RiskOverviewProps {
   analytics: Analytics;

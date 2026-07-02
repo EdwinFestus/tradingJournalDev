@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 import * as dashboardService from "../services/dashboardService";
-
 import type { DashboardResponse } from "../types/dashboard.types";
+const { analytics, recentTrades } = dashboard;
+
+
 
 export default function useDashboard() {
   const [dashboard, setDashboard] =

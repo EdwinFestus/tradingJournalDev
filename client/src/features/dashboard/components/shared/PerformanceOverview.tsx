@@ -2,7 +2,7 @@ import type {
   Analytics,
   Insight,
   Streak,
-} from "../types/dashboard.types";
+} from "../../types/dashboard.types";
 
 interface PerformanceOverviewProps {
   analytics: Analytics;

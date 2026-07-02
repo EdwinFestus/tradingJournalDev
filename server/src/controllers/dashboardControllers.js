@@ -1,4 +1,4 @@
-import { getDashboard } from "../services/dashboarService.js";
+import { getDashboard } from "../services/dashboardService.js";
 
 /**
  * ------------------------------------------
@@ -18,13 +18,10 @@ export const getDashboardData = async (req, res) => {
   } catch (error) {
     console.error("Dashboard Error:", error);
 
-    return res.status(500).json({
-      success: false,
-      message: "Failed to load dashboard.",
-      error:
-        process.env.NODE_ENV === "development"
-          ? error.message
-          : undefined,
+    res.status(500).json({
+        success: false,
+        message: error.message,
+        stack: error.stack
     });
-  }
+}
 };
