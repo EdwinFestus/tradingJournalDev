@@ -1,6 +1,12 @@
+import EquityChart from "../charts/EquityChart"
+import MonthlyPnLChart from "../charts/MonthlyPnLChart"
+import WinRateChart from "../charts/WinRateChart"
+import RiskOverview from "../shared/RiskOverview"
+import type { DashboardCharts, Analytics } from "../../types/dashboard.types"
+
 type Props = {
     charts: DashboardCharts;
-    analytics: DashboardAnalytics;
+    analytics: Analytics;
     drawdown: number;
 };
 
@@ -34,7 +40,7 @@ export default function DashboardCharts({
                 />
 
                 <WinRateChart
-                    winRate={analytics.overview.winRate}
+                    winRate={analytics.winRate}
                 />
 
             </div>

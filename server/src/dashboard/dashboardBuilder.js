@@ -1,7 +1,10 @@
 import { buildAnalytics } from "../analytics/index.js";
+import { buildCharts } from "./chartBuilder.js";
+import { buildInsights } from "./insightBuilder.js";
+import { buildPortfolio, buildStreak } from './portfolioBuilder.js';
 
 
-export async function buildDashboard(trades = []) {
+export function buildDashboard(trades = []) {
     if (!Array.isArray(trades)) {
         throw new TypeError(
             "buildDashboard expected an array of trades."
@@ -9,22 +12,11 @@ export async function buildDashboard(trades = []) {
     }
 
     return {
-        analytics: await buildAnalytics(trades),
+        analytics: buildAnalytics(trades),
         recentTrades: trades.slice(0, 10),
-        charts: {
-            equityCurve: [],
-            monthlyPnL: [],
-            winRateTrend: [],
-        },
-        portfolio: {
-            balance: 0,
-            equity: 0,
-            netProfit: 0,
-        },
-        streak: {
-            current: 0,
-            best: 0,
-        },
-        insights: [],
+        charts: buildCharts(trades),
+        portfolio: buildPortfolio(trades),
+        streak: buildStreak(trades),
+        insights: buildInsights(trades),
     };
 }

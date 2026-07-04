@@ -1,3 +1,5 @@
+import type { MonthlyPnL } from "../../types/dashboard.types";
+
 import {
   Bar,
   BarChart,
@@ -8,7 +10,6 @@ import {
   YAxis,
 } from "recharts";
 
-import type { MonthlyPnL } from "../../types/dashboard.types";
 
 interface MonthlyPnLChartProps {
   data: MonthlyPnL[];
@@ -66,8 +67,8 @@ export default function MonthlyPnLChart({
             />
 
             <Tooltip
-              formatter={(value: number) => [
-                `$${value.toFixed(2)}`,
+              formatter={(value) => [
+                `$${Number(value).toFixed(2)}`,
                 "Profit",
               ]}
               contentStyle={{

@@ -1,5 +1,6 @@
 import type { Trade } from "../../../shared/types/trade";
 
+
 export interface PortfolioSummary {
   totalTrades: number;
   winningTrades: number;
@@ -71,4 +72,56 @@ export  interface  DashboardResponse {
 export interface DashboardApiResponse {
   success: boolean;
   data: DashboardResponse;
+}
+
+
+export interface DashboardOverview {
+  totalTrades: number;
+  closedTrades: number;
+  wins: number;
+  losses: number;
+  breakeven: number;
+  winRate: number;
+  netProfit: number;
+  profitFactor: number;
+}
+
+export interface PerformanceAnalytics {
+  averageRR: number;
+  averageWin: number;
+  averageLoss: number;
+  expectancy: number;
+  profitFactor: number;
+}
+
+export interface PairAnalytics {  
+  pair: string;
+  totalTrades: number;
+  wins: number;
+  losses: number;
+  winRate: number;
+  grossProfit: number;
+  grossLoss: number;
+  netProfit: number;
+  averageRR: number;
+  profitFactor: number;
+}
+
+export interface StrategyAnalytics {
+  strategyDistribution: StrategyDistribution[];
+  timeframeDistribution: TimeframeDistribution[];
+}
+
+export interface DashboardAnalytics {
+    overview: DashboardOverview;
+    performance: PerformanceAnalytics;
+    strategy: StrategyAnalytics;
+    pairs: PairAnalytics;
+
+}
+
+
+export interface DashboardLoading {
+  isLoading: boolean;
+  
 }

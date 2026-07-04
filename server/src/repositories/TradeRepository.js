@@ -69,26 +69,27 @@ export async function findByUser(
 /**
  * Return all trades for analytics
  */
-// export async function findAllByUser(userId) {
-//     return Trade.find({
-//         user: userId,
-//         isDeleted: false,
-//     }).sort({
-//         tradeDate: -1,
-//     });
-// }
-
 export async function findAllByUser(userId) {
-
-    const trades = await Trade.find({
+    return Trade.find({
         user: userId,
         isDeleted: false,
+    }).sort({
+        tradeDate: -1,
     });
-
-    console.log("Dashboard Trades:", trades.length);
-
-    return trades;
 }
+
+// export async function findAllByUser(userId) {
+
+//     const trades = await Trade.find({
+//         user: userId,
+//         isDeleted: false,
+//     });
+
+//     console.log("Dashboard Trades:", trades.length);
+
+//     return trades;
+// }
+
 
 /**
  * Update trade

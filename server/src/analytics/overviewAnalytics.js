@@ -1,37 +1,68 @@
-export function getOverviewAnalytics(trades) {
-    const closedTrades = trades.filter(t => t.status === "CLOSED");
+export function getOverviewAnalytics(trades = []) {
+    const closedTrades = trades.filter(
+        trade => trade.status === "CLOSED"
+    );
 
-    const wins = closedTrades.filter(t => t.outcome === "WIN");
-    const losses = closedTrades.filter(t => t.outcome === "LOSS");
+    const openTrades = trades.filter(
+        trade => trade.status === "OPEN"
+    );
 
-    const totalProfit = wins.reduce(
-        (sum, trade) => sum + trade.profitLoss,
+    const winningTrades = closedTrades.filter(
+        trade => trade.outcome === "WIN"
+    );
+
+    const losingTrades = closedTrades.filter(
+        trade => trade.outcome === "LOSS"
+    );
+
+    const breakEvenTrades = closedTrades.filter(
+        trade => trade.outcome === "BE"
+    );
+
+    const totalProfit = winningTrades.reduce(
+        (sum, trade) => sum + (trade.profitLoss ?? 0),
         0
     );
 
-    const totalLoss = Math.abs(
-        losses.reduce((sum, trade) => sum + trade.profitLoss, 0)
+    const totalLoss = losingTrades.reduce(
+        (sum, trade) => sum + Math.abs(trade.profitLoss ?? 0),
+        0
     );
+
+    const netProfit = closedTrades.reduce(
+        (sum, trade) => sum + (trade.profitLoss ?? 0),
+        0
+    );
+
+    const averageRR =
+        closedTrades.length > 0
+            ? closedTrades.reduce(
+                  (sum, trade) => sum + (trade.rrRatio ?? 0),
+                  0
+              ) / closedTrades.length
+            : 0;
 
     return {
         totalTrades: trades.length,
+        openTrades: openTrades.length,
         closedTrades: closedTrades.length,
-        wins: wins.length,
-        losses: losses.length,
-        breakeven: closedTrades.filter(
-            t => t.outcome === "BE"
-        ).length,
+        winningTrades: winningTrades.length,
+        losingTrades: losingTrades.length,
+        breakEvenTrades: breakEvenTrades.length,
 
         winRate:
-            closedTrades.length === 0
-                ? 0
-                : (wins.length / closedTrades.length) * 100,
+            closedTrades.length > 0
+                ? Number(
+                      (
+                          (winningTrades.length / closedTrades.length) *
+                          100
+                      ).toFixed(2)
+                  )
+                : 0,
 
-        netProfit: totalProfit - totalLoss,
-
-        profitFactor:
-            totalLoss === 0
-                ? totalProfit
-                : totalProfit / totalLoss,
+        totalProfit,
+        totalLoss,
+        netProfit,
+        averageRR: Number(averageRR.toFixed(2)),
     };
 }

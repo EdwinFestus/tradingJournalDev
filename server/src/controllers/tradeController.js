@@ -48,6 +48,8 @@ export async function createTrade(req, res, next) {
         const result = await tradeService.createTrade(
             req.user.id,
             req.body
+
+
         );
 
         res.status(201).json({

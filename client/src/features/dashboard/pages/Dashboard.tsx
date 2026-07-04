@@ -3,7 +3,7 @@ import DashboardAnalytics from "../components/dashboards/DashboardAnalytics";
 import DashboardCharts from "../components/dashboards/DashboardCharts";
 import DashboardError from "../components/dashboards/DashboardError";
 import DashboardEmpty from "../components/dashboards/DashboardEmpty";
-import DashboardHeader from "../components/dashboards/DashboardHeader";
+import DashboardHeader from "../components/headers/DashboardHeader";
 import DashboardInsights from "../components/dashboards/DashboardInsights";
 import DashboardLoading from "../components/dashboards/DashboardLoading";
 import DashboardStats from "../components/dashboards/DashboardStats";
@@ -39,8 +39,14 @@ export default function Dashboard() {
             />
 
             <DashboardAnalytics
-                charts={dashboard.charts}
+                charts={dashboard.analytics}
                 analytics={dashboard.analytics}
+                drawdown={dashboard.drawdown}
+            />
+
+            <DashboardCharts
+                charts={dashboard.charts}
+                analytics={dashboard.charts}
                 drawdown={dashboard.drawdown}
             />
 

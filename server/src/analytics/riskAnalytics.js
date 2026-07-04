@@ -1,12 +1,38 @@
-export const getRiskAnalytics = async (req, res) => {
-  try {
-    const { userId } = req.params;      
-    const riskAnalytics = await RiskAnalytics.findOne({ userId });
-    if (!riskAnalytics) {
-      return res.status(404).json({ message: 'Risk analytics not found' });
+export function getRiskAnalytics(trades) {
+
+    const closedTrades = trades.filter(
+        trade => trade.status === "CLOSED"
+    );
+
+    if (closedTrades.length === 0) {
+        return {
+            averageRisk: 0,
+            averageReward: 0,
+            averageRR: 0,
+            totalRisk: 0,
+            totalReward: 0,
+        };
     }
-    res.json(riskAnalytics);
-  } catch (error) {
-    res.status(500).json({ message: 'Error fetching risk analytics', error });
-  }
-};
+
+    return {
+        averageRisk:
+            closedTrades.reduce((a, b) => a + (b.riskAmount ?? 0 ), 0 )/
+            closedTrades.length,
+
+        averageReward: 
+            closedTrades.reduce((a, b) => a + (b.rewardAmount ?? 0 ), 0 )/
+            closedTrades.length,
+
+        averageRR:
+            closedTrades.reduce((a, b) => a + (b.rrRatio ?? 0 ), 0 )/
+            closedTrades.length,
+
+        totalRisk:
+            closedTrades.reduce((a, b) => a + (b.riskAmount ?? 0 ), 0 ),
+
+        totalReward: 
+            closedTrades.reduce((a, b) => a + (b.rewardAmount ?? 0 ), 0 ),
+
+    }
+
+  };

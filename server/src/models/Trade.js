@@ -293,42 +293,38 @@ tradeSchema.virtual("isClosed").get(function () {
 });
 
 
-tradeSchema.pre("validate", function (next) {
+tradeSchema.pre("validate", function () {
     if (this.orderType === "BUY") {
         if (this.stopLoss >= this.entry) {
-            return next(new Error("BUY trades require stopLoss below entry."));
+            throw new Error("BUY trades require stopLoss below entry.");
         }
 
         if (this.takeProfit <= this.entry) {
-            return next(new Error("BUY trades require takeProfit above entry."));
+            throw new Error("BUY trades require takeProfit above entry.");
         }
     }
 
     if (this.orderType === "SELL") {
         if (this.stopLoss <= this.entry) {
-            return next(new Error("SELL trades require stopLoss above entry."));
+            throw new Error("SELL trades require stopLoss above entry.");
         }
 
         if (this.takeProfit >= this.entry) {
-            return next(new Error("SELL trades require takeProfit below entry."));
+            throw new Error("SELL trades require takeProfit below entry.");
         }
     }
-
-    next();
 });
 
-tradeSchema.pre("save", function (next) {
+
+
+tradeSchema.pre("save", function () {
     const risk = Math.abs(this.entry - this.stopLoss);
     const reward = Math.abs(this.takeProfit - this.entry);
 
     this.riskAmount = risk;
     this.rewardAmount = reward;
     this.rrRatio =
-        risk === 0
-            ? 0
-            : Number((reward / risk).toFixed(2));
-
-    next();
+        risk === 0 ? 0 : Number((reward / risk).toFixed(2));
 });
 
 
