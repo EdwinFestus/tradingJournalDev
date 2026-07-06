@@ -1,103 +1,164 @@
+import TrendingUpIcon from "@mui/icons-material/TrendingUp";
+import TrendingDownIcon from "@mui/icons-material/TrendingDown";
+import TimelineIcon from "@mui/icons-material/Timeline";
+import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
+
+import {
+    Box,
+    Grid,
+    Stack,
+    Typography,
+} from "@mui/material";
+
+import DashboardCard from "../cards/DashboardCard";
+
 import type {
-  Analytics,
-  Insight,
-  Streak,
+    PerformanceAnalytics,
 } from "../../types/dashboard.types";
 
 interface PerformanceOverviewProps {
-  analytics: Analytics;
-  streak?: Streak;
-  insights?: Insight[];
+    performance: PerformanceAnalytics;
+}
+
+interface MetricItemProps {
+    title: string;
+    value: string;
+    icon: React.ReactNode;
+    color: string;
+}
+
+function MetricItem({
+    title,
+    value,
+    icon,
+    color,
+}: MetricItemProps) {
+    return (
+        <Box
+            sx={{
+                p: 2.5,
+                borderRadius: 2,
+                bgcolor: "background.default",
+                border: 1,
+                borderColor: "divider",
+                height: "100%",
+            }}
+        >
+            <Stack
+                direction="row"
+                spacing={2}
+                alignItems="center"
+                sx={{ mb: 2 }}
+            >
+                <Box
+                    sx={{
+                        width: 42,
+                        height: 42,
+                        borderRadius: "50%",
+                        bgcolor: `${color}20`,
+                        color,
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                    }}
+                >
+                    {icon}
+                </Box>
+
+                <Typography
+                    variant="body2"
+                    color="text.secondary"
+                >
+                    {title}
+                </Typography>
+            </Stack>
+
+            <Typography
+                variant="h5"
+                fontWeight={700}
+            >
+                {value}
+            </Typography>
+        </Box>
+    );
 }
 
 export default function PerformanceOverview({
-  analytics,
-  streak,
-  insights = [],
+    performance,
 }: PerformanceOverviewProps) {
-  const metrics = [
-    {
-      label: "Win Rate",
-      value: `${analytics.winRate.toFixed(1)}%`,
-    },
-    {
-      label: "Total Trades",
-      value: analytics.totalTrades,
-    },
-    {
-      label: "Profit Factor",
-      value: analytics.profitFactor.toFixed(2),
-    },
-    {
-      label: "Portfolio",
-      value: `$${analytics.netProfit.toFixed(2)}`,
-    },
-  ];
 
-  return (
-    <section className="surface-card p-5 lg:col-span-2">
-      <div className="mb-5">
-        <p className="panel-heading">
-          Performance Snapshot
-        </p>
+    return (
 
-        <p className="mt-1 text-sm text-slate-500">
-          High-level account health indicators.
-        </p>
-      </div>
+        <DashboardCard
+            title="Performance Overview"
+            subtitle="Trading performance statistics"
+            height="auto"
+        >
 
-      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-        {metrics.map((metric) => (
-          <div
-            key={metric.label}
-            className="rounded-lg border border-slate-100 bg-slate-50/70 p-4 dark:border-slate-700 dark:bg-slate-800"
-          >
-            <p className="text-xs font-semibold uppercase text-slate-500">
-              {metric.label}
-            </p>
+            <Grid
+                container
+                spacing={2}
+            >
 
-            <p className="mt-2 text-lg font-bold">
-              {metric.value}
-            </p>
-          </div>
-        ))}
-      </div>
+                <Grid size={{ xs: 12, sm: 6, lg: 4 }}>
 
-      <div className="mt-6 grid gap-4 md:grid-cols-2">
-        <div className="rounded-lg border border-slate-100 p-4 dark:border-slate-700">
-          <p className="text-sm font-semibold">
-            Current Streak
-          </p>
+                    <MetricItem
+                        title="Average Win"
+                        value={`$${performance.averageWin.toFixed(2)}`}
+                        icon={<TrendingUpIcon />}
+                        color="#22C55E"
+                    />
 
-          <p className="mt-2 text-xl font-bold">
-            {streak
-              ? `${streak.type} (${streak.count})`
-              : "No streak"}
-          </p>
-        </div>
+                </Grid>
 
-        <div className="rounded-lg border border-slate-100 p-4 dark:border-slate-700">
-          <p className="text-sm font-semibold">
-            Latest Insight
-          </p>
+                <Grid size={{ xs: 12, sm: 6, lg: 4 }}>
 
-          {insights.length > 0 ? (
-            <>
-              <p className="mt-2 font-semibold">
-                {insights[0].title}
-              </p>
+                    <MetricItem
+                        title="Average Loss"
+                        value={`$${performance.averageLoss.toFixed(2)}`}
+                        icon={<TrendingDownIcon />}
+                        color="#EF4444"
+                    />
 
-              <p className="mt-1 text-sm text-slate-500">
-                {insights[0].description}
-              </p>
-            </>
-          ) : (
-            <p className="mt-2 text-sm text-slate-500">
-              No insights available.
-            </p>
-          )}
-        </div>
-      </div>
-    </section>
-  );
+                </Grid>
+
+                <Grid size={{ xs: 12, sm: 6, lg: 4 }}>
+
+                    <MetricItem
+                        title="Average RR"
+                        value={performance.averageRR.toFixed(2)}
+                        icon={<TimelineIcon />}
+                        color="#3B82F6"
+                    />
+
+                </Grid>
+
+                <Grid size={{ xs: 12, sm: 6, lg: 6 }}>
+
+                    <MetricItem
+                        title="Largest Win"
+                        value={`$${performance.largestWin.toFixed(2)}`}
+                        icon={<EmojiEventsIcon />}
+                        color="#22C55E"
+                    />
+
+                </Grid>
+
+                <Grid size={{ xs: 12, sm: 6, lg: 6 }}>
+
+                    <MetricItem
+                        title="Largest Loss"
+                        value={`$${performance.largestLoss.toFixed(2)}`}
+                        icon={<TrendingDownIcon />}
+                        color="#EF4444"
+                    />
+
+                </Grid>
+
+            </Grid>
+
+        </DashboardCard>
+
+    );
+
 }

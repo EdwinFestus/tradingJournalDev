@@ -1,51 +1,68 @@
-import EquityChart from "../charts/EquityChart"
-import MonthlyPnLChart from "../charts/MonthlyPnLChart"
-import WinRateChart from "../charts/WinRateChart"
-import RiskOverview from "../shared/RiskOverview"
-import type { DashboardCharts, Analytics } from "../../types/dashboard.types"
+import {
 
-type Props = {
-    charts: DashboardCharts;
-    analytics: Analytics;
-    drawdown: number;
-};
+    Grid,
+
+} from "@mui/material";
+
+import EquityChart from "../charts/EquityChart";
+
+import MonthlyPnLChart from "../charts/MonthlyPnLChart";
+
+import type {
+
+    DashboardCharts as Charts,
+
+} from "../../types/dashboard.types";
+
+interface Props {
+
+    charts: Charts;
+
+}
 
 export default function DashboardCharts({
+
     charts,
-    analytics,
-    drawdown,
+
 }: Props) {
 
     return (
 
-        <>
+       <Grid
+            container
+            spacing={3}
+            sx={{
+                mb: 4,
+            }}
+        >
 
-            <div className="grid gap-4 xl:grid-cols-[minmax(0,1.55fr)_minmax(320px,0.75fr)]">
+           <Grid
+                size={{
+                    xs:12,
+                    lg:8,
+                }}
+            >
 
                 <EquityChart
                     data={charts.equityCurve}
                 />
 
-                <RiskOverview
-                    drawdown={drawdown}
-                    analytics={analytics}
-                />
+            </Grid>
 
-            </div>
-
-            <div className="grid gap-4 xl:grid-cols-2">
+            <Grid
+                size={{
+                    xs:12,
+                    lg:4,
+                }}
+            >
 
                 <MonthlyPnLChart
                     data={charts.monthlyPnL}
                 />
 
-                <WinRateChart
-                    winRate={analytics.winRate}
-                />
+            </Grid>
 
-            </div>
-
-        </>
+        </Grid>
 
     );
 

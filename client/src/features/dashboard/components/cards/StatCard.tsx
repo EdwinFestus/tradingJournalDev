@@ -1,54 +1,96 @@
+import {
+    Avatar,
+    Box,
+    Paper,
+    Typography,
+} from "@mui/material";
+
 import type { ReactNode } from "react";
 
-interface StatCardProps {
+interface Props {
     title: string;
     value: string | number;
-    change: string;
-    icon: React.ReactNode;
-
     subtitle?: string;
-
-    loading?: boolean;
-
-    trend?: "up" | "down";
-
-    accent?: "blue" | "green" | "purple" | "orange";
+    icon: ReactNode;
+    color?: string;
 }
 
 export default function StatCard({
-  title,
-  value,
-  icon,
-  change,
-  positive = true,
-}: StatCardProps) {
-  return (
-    <div className="surface-card p-5 transition hover:border-slate-300 hover:shadow-md">
-      <div className="flex items-start justify-between gap-4">
-        <div className="min-w-0">
-          <p className="text-sm font-medium text-slate-500">
-            {title}
-          </p>
+    title,
+    value,
+    subtitle,
+    icon,
+    color = "primary.main",
+}: Props) {
+    return (
+        <Paper
+            elevation={0}
+            sx={{
+                p: 3,
+                height: "100%",
+                borderRadius: 3,
+                bgcolor: "background.paper",
+                border: 1,
+                borderColor: "divider",
+                transition: ".2s",
 
-          <h2 className="metric-value mt-2 truncate">
-            {value}
-          </h2>
+                "&:hover": {
+                    transform: "translateY(-3px)",
+                    borderColor: color,
+                },
+            }}
+        >
+            <Box
+                sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "flex-start",
+                }}
+            >
+                <Box>
 
-          <p
-            className={`mt-3 inline-flex rounded-md px-2 py-1 text-xs font-semibold ${
-              positive
-                ? "bg-emerald-50 text-emerald-700"
-                : "bg-rose-50 text-rose-700"
-            }`}
-          >
-            {change}
-          </p>
-        </div>
+                    <Typography
+                        variant="body2"
+                        color="text.secondary"
+                    >
+                        {title}
+                    </Typography>
 
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-slate-200 bg-slate-50 text-slate-700 [&_.MuiSvgIcon-root]:text-[21px]">
-          {icon}
-        </div>
-      </div>
-    </div>
-  );
+                    <Typography
+                        variant="h4"
+                        sx={{
+                            mt: 1,
+                            fontWeight: 700,
+                        }}
+                    >
+                        {value}
+                    </Typography>
+
+                    {subtitle && (
+
+                        <Typography
+                            variant="caption"
+                            color="text.secondary"
+                        >
+                            {subtitle}
+                        </Typography>
+
+                    )}
+
+                </Box>
+
+                <Avatar
+                    sx={{
+                        bgcolor: color,
+                        width: 52,
+                        height: 52,
+                    }}
+                >
+                    {icon}
+                </Avatar>
+
+            </Box>
+
+        </Paper>
+    );
 }

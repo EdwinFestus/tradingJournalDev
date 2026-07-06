@@ -1,73 +1,65 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useCallback, useEffect, useState } from "react";
 
-import * as dashboardService from "../services/dashboardService";
-import type { DashboardResponse } from "../types/dashboard.types";
-const { analytics, recentTrades } = dashboard;
+import DashboardService from "../services/dashboardService";
 
+import type {
+    DashboardData,
+} from "../types/dashboard.types";
 
+export function useDashboard() {
 
-export default function useDashboard() {
-  const [dashboard, setDashboard] =
-    useState<DashboardResponse | null>(null);
+    const [dashboard, setDashboard] =
+        useState<DashboardData | null>(null);
 
-  const [loading, setLoading] =
-    useState(true);
+    const [loading, setLoading] =
+        useState(true);
 
-  const [error, setError] =
-    useState<string | null>(null);
+    const [error, setError] =
+        useState<string | null>(null);
 
-  useEffect(() => {
-    const loadDashboard = async () => {
-      try {
-        setLoading(true);
+    const fetchDashboard = useCallback(async () => {
 
-        const data =
-          await dashboardService.getDashboard();
+        try {
 
-        setDashboard(data);
+            setLoading(true);
 
-        setError(null);
-      } catch (error: unknown) {
-        if (axios.isAxiosError(error)) {
-          setError(
-            error.response?.data?.message ??
-              "Failed to load dashboard."
-          );
-        } else {
-          setError("Failed to load dashboard.");
+            setError(null);
+
+            const response =
+                await DashboardService.getDashboard();
+
+            setDashboard(response);
+
+        } catch (error) {
+
+            console.error(error);
+
+            setError("Failed to load dashboard.");
+
+        } finally {
+
+            setLoading(false);
+
         }
-      } finally {
-        setLoading(false);
-      }
+
+    }, []);
+
+    useEffect(() => {
+
+        fetchDashboard();
+
+    }, [fetchDashboard]);
+
+    return {
+
+        dashboard,
+
+        loading,
+
+        error,
+
+        refresh: fetchDashboard,
+
     };
 
-    void loadDashboard();
-  }, []);
-
-  return {
-    dashboard,
-
-    portfolio: dashboard?.portfolio,
-
-    analytics: dashboard?.analytics,
-
-    charts: dashboard?.charts,
-
-    recentTrades:
-      dashboard?.recentTrades ?? [],
-
-    streak:
-      dashboard?.streak,
-
-    insights:
-      dashboard?.insights ?? [],
-
-    drawdown:
-      dashboard?.drawdown ?? 0,
-
-    loading,
-
-    error,
-  };
 }

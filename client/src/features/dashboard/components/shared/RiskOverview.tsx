@@ -1,87 +1,147 @@
-import {
-  CheckCircle,
-  Shield,
-  TrendingUp,
-  Warning,
-} from "@mui/icons-material";
+import SecurityIcon from "@mui/icons-material/Security";
+import SavingsIcon from "@mui/icons-material/Savings";
+import BalanceIcon from "@mui/icons-material/Balance";
+import PaidIcon from "@mui/icons-material/Paid";
+import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 
-import type { Analytics } from "../../types/dashboard.types";
+import {
+    Box,
+    Grid,
+    Stack,
+    Typography,
+} from "@mui/material";
+
+import DashboardCard from "../cards/DashboardCard";
+
+import type { RiskAnalytics } from "../../types/dashboard.types";
 
 interface RiskOverviewProps {
-  analytics: Analytics;
-  drawdown: number;
+    risk: RiskAnalytics;
+}
+
+interface RiskMetricProps {
+    title: string;
+    value: string;
+    icon: React.ReactNode;
+    color: string;
+}
+
+function RiskMetric({
+    title,
+    value,
+    icon,
+    color,
+}: RiskMetricProps) {
+    return (
+        <Box
+            sx={{
+                p: 2.5,
+                borderRadius: 3,
+                bgcolor: "background.default",
+                border: 1,
+                borderColor: "divider",
+                height: "100%",
+            }}
+        >
+            <Stack
+                direction="row"
+                spacing={2}
+                alignItems="center"
+                sx={{ mb: 2 }}
+            >
+                <Box
+                    sx={{
+                        width: 44,
+                        height: 44,
+                        borderRadius: "50%",
+                        bgcolor: `${color}20`,
+                        color,
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                    }}
+                >
+                    {icon}
+                </Box>
+
+                <Typography
+                    variant="body2"
+                    color="text.secondary"
+                >
+                    {title}
+                </Typography>
+            </Stack>
+
+            <Typography
+                variant="h5"
+                sx={{
+                    fontWeight: 700,
+                }}
+            >
+                {value}
+            </Typography>
+        </Box>
+    );
 }
 
 export default function RiskOverview({
-  analytics,
-  drawdown,
+    risk,
 }: RiskOverviewProps) {
-  const items = [
-    {
-      label: "Average Risk",
-      value: `$${(
-        analytics.grossLoss /
-        Math.max(analytics.losses, 1)
-      ).toFixed(2)}`,
-      icon: <Shield />,
-      tone: "text-blue-600 bg-blue-50",
-    },
-    {
-      label: "Average R:R",
-      value: `1 : ${analytics.averageRR.toFixed(2)}`,
-      icon: <TrendingUp />,
-      tone: "text-emerald-600 bg-emerald-50",
-    },
-    {
-      label: "Max Drawdown",
-      value: `$${drawdown.toFixed(2)}`,
-      icon: <Warning />,
-      tone: "text-amber-600 bg-amber-50",
-    },
-    {
-      label: "Profit Factor",
-      value: analytics.profitFactor.toFixed(2),
-      icon: <CheckCircle />,
-      tone: "text-slate-700 bg-slate-100",
-    },
-  ];
+    return (
+        <DashboardCard
+            title="Risk Overview"
+            subtitle="Risk & reward management"
+            height="auto"
+        >
+            <Grid
+                container
+                spacing={2}
+            >
+                <Grid size={{ xs: 12, sm: 6, lg: 4 }}>
+                    <RiskMetric
+                        title="Average Risk"
+                        value={`$${risk.averageRisk.toFixed(2)}`}
+                        icon={<SecurityIcon />}
+                        color="#EF4444"
+                    />
+                </Grid>
 
-  return (
-    <section className="surface-card p-5">
-      <div className="mb-5">
-        <p className="panel-heading">
-          Risk Overview
-        </p>
+                <Grid size={{ xs: 12, sm: 6, lg: 4 }}>
+                    <RiskMetric
+                        title="Average Reward"
+                        value={`$${risk.averageReward.toFixed(2)}`}
+                        icon={<SavingsIcon />}
+                        color="#22C55E"
+                    />
+                </Grid>
 
-        <p className="mt-1 text-sm text-slate-500">
-          Exposure and execution quality.
-        </p>
-      </div>
+                <Grid size={{ xs: 12, sm: 6, lg: 4 }}>
+                    <RiskMetric
+                        title="Average R:R"
+                        value={risk.averageRR.toFixed(2)}
+                        icon={<BalanceIcon />}
+                        color="#3B82F6"
+                    />
+                </Grid>
 
-      <div className="space-y-3">
-        {items.map((item) => (
-          <div
-            key={item.label}
-            className="flex items-center justify-between gap-4 rounded-lg border border-slate-100 bg-slate-50/70 px-3 py-3 dark:border-slate-700 dark:bg-slate-800"
-          >
-            <div className="flex min-w-0 items-center gap-3">
-              <span
-                className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${item.tone} [&_.MuiSvgIcon-root]:text-[18px]`}
-              >
-                {item.icon}
-              </span>
+                <Grid size={{ xs: 12, sm: 6, lg: 6 }}>
+                    <RiskMetric
+                        title="Total Risk"
+                        value={`$${risk.totalRisk.toFixed(2)}`}
+                        icon={<PaidIcon />}
+                        color="#F97316"
+                    />
+                </Grid>
 
-              <span className="truncate text-sm font-medium">
-                {item.label}
-              </span>
-            </div>
-
-            <strong className="text-right text-sm font-semibold">
-              {item.value}
-            </strong>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
+                <Grid size={{ xs: 12, sm: 6, lg: 6 }}>
+                    <RiskMetric
+                        title="Total Reward"
+                        value={`$${risk.totalReward.toFixed(2)}`}
+                        icon={<TrendingUpIcon />}
+                        color="#14B8A6"
+                    />
+                </Grid>
+            </Grid>
+        </DashboardCard>
+    );
 }

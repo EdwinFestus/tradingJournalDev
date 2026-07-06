@@ -1,13 +1,32 @@
-import api from "../../../shared/lib/api";
+import api from "../../../shared/api/api";
 
 import type {
-  DashboardApiResponse,
+    DashboardApiResponse,
+    DashboardData,
 } from "../types/dashboard.types";
 
-export async function getDashboard() {
-  const { data } = await api.get<DashboardApiResponse>(
-    "/dashboard"
-  );
+class DashboardService {
 
-  return data.data;
+    async getDashboard(): Promise<DashboardData> {
+
+        const { data } =
+            await api.get<DashboardApiResponse>(
+                "/dashboard"
+            );
+
+        return data.data;
+    }
+
+    async refreshDashboard(): Promise<DashboardData> {
+
+        const { data } =
+            await api.get<DashboardApiResponse>(
+                "/dashboard"
+            );
+
+        return data.data;
+    }
+
 }
+
+export default new DashboardService();

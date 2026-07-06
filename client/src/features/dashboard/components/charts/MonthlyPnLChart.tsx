@@ -1,93 +1,84 @@
-import type { MonthlyPnL } from "../../types/dashboard.types";
-
 import {
-  Bar,
-  BarChart,
-  CartesianGrid,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
+
+    Bar,
+
+    BarChart,
+
+    CartesianGrid,
+
+    ResponsiveContainer,
+
+    Tooltip,
+
+    XAxis,
+
+    YAxis,
+
 } from "recharts";
 
+import DashboardCard from "../cards/DashboardCard";
 
-interface MonthlyPnLChartProps {
-  data: MonthlyPnL[];
+import type {
+
+    MonthlyPnLPoint,
+
+} from "../../types/dashboard.types";
+
+interface Props {
+
+    data: MonthlyPnLPoint[];
+
 }
 
 export default function MonthlyPnLChart({
-  data,
-}: MonthlyPnLChartProps) {
-  return (
-    <section className="surface-card p-5">
-      <div className="mb-5">
-        <p className="panel-heading">
-          Monthly P&amp;L
-        </p>
 
-        <p className="mt-1 text-sm text-slate-500">
-          Profit and loss grouped by month.
-        </p>
-      </div>
+    data,
 
-      <div className="h-72">
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart
-            data={data}
-            margin={{
-              top: 8,
-              right: 8,
-              left: 0,
-              bottom: 0,
-            }}
-          >
-            <CartesianGrid
-              stroke="#e5e7eb"
-              vertical={false}
-            />
+}: Props) {
 
-            <XAxis
-              dataKey="month"
-              axisLine={false}
-              tickLine={false}
-              tick={{
-                fill: "#64748b",
-                fontSize: 12,
-              }}
-            />
+    return (
 
-            <YAxis
-              axisLine={false}
-              tickLine={false}
-              tick={{
-                fill: "#64748b",
-                fontSize: 12,
-              }}
-              width={56}
-            />
+        <DashboardCard
 
-            <Tooltip
-              formatter={(value) => [
-                `$${Number(value).toFixed(2)}`,
-                "Profit",
-              ]}
-              contentStyle={{
-                border: "1px solid #e5e7eb",
-                borderRadius: 8,
-                boxShadow:
-                  "0 12px 30px rgba(15,23,42,0.08)",
-              }}
-            />
+            title="Monthly Profit"
 
-            <Bar
-              dataKey="profit"
-              fill="#2563eb"
-              radius={[4, 4, 0, 0]}
-              maxBarSize={44}
-            />
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
-    </section>
-  );
+            subtitle="Monthly performance"
+
+        >
+
+            <ResponsiveContainer
+                width="100%"
+                height="100%"
+            >
+
+                <BarChart data={data}>
+
+                    <CartesianGrid
+                        stroke="#1F2937"
+                    />
+
+                    <XAxis
+                        dataKey="month"
+                    />
+
+                    <YAxis />
+
+                    <Tooltip />
+
+                    <Bar
+
+                        dataKey="pnl"
+
+                        radius={[8,8,0,0]}
+
+                    />
+
+                </BarChart>
+
+            </ResponsiveContainer>
+
+        </DashboardCard>
+
+    );
+
 }

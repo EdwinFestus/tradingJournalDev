@@ -1,127 +1,249 @@
-import type { Trade } from "../../../shared/types/trade";
+import type { Trade } from "../../trade/types/trade";
 
+/* -------------------------------------------------------------------------- */
+/*                                  API Root                                  */
+/* -------------------------------------------------------------------------- */
 
-export interface PortfolioSummary {
-  totalTrades: number;
-  winningTrades: number;
-  losingTrades: number;
-  openTrades: number;
-  breakevenTrades: number;
+export interface DashboardApiResponse {
+    success: boolean;
+    data: DashboardData;
 }
 
-export interface Analytics {
-  totalTrades: number;
-  wins: number;
-  losses: number;
-  winRate: number;
-  grossProfit: number;
-  grossLoss: number;
-  netProfit: number;
-  averageRR: number;
-  profitFactor: number;
+export interface DashboardData {
+    analytics: DashboardAnalytics;
+    recentTrades: Trade[];
+    charts: DashboardCharts;
+    portfolio: PortfolioSummary;
+    streak: TradingStreak;
+    insights: DashboardInsight[];
 }
 
-export interface MonthlyPnL {
-  month: string;
-  profit: number;
-}
 
-export interface EquityPoint {
-  date: string;
-  equity: number;
-}
-
-export interface StrategyDistribution {
-  strategy: string;
-  total: number;
-}
-
-export interface TimeframeDistribution {
-  timeframe: string;
-  total: number;
+export interface Insight {
+    title: string;
+    description: string;
 }
 
 export interface Streak {
-  type: string;
-  count: number;
-}
-
-export interface Insight {
-  type: "success" | "warning" | "info";
-  title: string;
-  description: string;
-}
-
-export interface DashboardCharts {
-  monthlyPnL: MonthlyPnL[];
-  equityCurve: EquityPoint[];
-  strategyDistribution: StrategyDistribution[];
-  timeframeDistribution: TimeframeDistribution[];
-}
-
-export  interface  DashboardResponse {
-  portfolio: PortfolioSummary;
-  analytics: Analytics;
-  charts: DashboardCharts;
-  recentTrades: Trade[];
-  streak: Streak;
-  insights: Insight[];
-  drawdown: number;
-}
-
-export interface DashboardApiResponse {
-  success: boolean;
-  data: DashboardResponse;
+    current: number;
+    best: number;
 }
 
 
-export interface DashboardOverview {
-  totalTrades: number;
-  closedTrades: number;
-  wins: number;
-  losses: number;
-  breakeven: number;
-  winRate: number;
-  netProfit: number;
-  profitFactor: number;
-}
 
-export interface PerformanceAnalytics {
-  averageRR: number;
-  averageWin: number;
-  averageLoss: number;
-  expectancy: number;
-  profitFactor: number;
-}
-
-export interface PairAnalytics {  
-  pair: string;
-  totalTrades: number;
-  wins: number;
-  losses: number;
-  winRate: number;
-  grossProfit: number;
-  grossLoss: number;
-  netProfit: number;
-  averageRR: number;
-  profitFactor: number;
-}
-
-export interface StrategyAnalytics {
-  strategyDistribution: StrategyDistribution[];
-  timeframeDistribution: TimeframeDistribution[];
-}
+/* -------------------------------------------------------------------------- */
+/*                                 Analytics                                  */
+/* -------------------------------------------------------------------------- */
 
 export interface DashboardAnalytics {
     overview: DashboardOverview;
     performance: PerformanceAnalytics;
-    strategy: StrategyAnalytics;
-    pairs: PairAnalytics;
-
+    strategy: Record<string, StrategyAnalytics>;
+    pairs: PairAnalytics[];
+    risk: RiskAnalytics;
+    psychology: PsychologyAnalytics[];
+    sessions: SessionAnalytics[];
+    calendar: CalendarAnalytics[];
+    trade: TradeAnalytics;
 }
 
+/* -------------------------------------------------------------------------- */
+/*                                  Overview                                  */
+/* -------------------------------------------------------------------------- */
 
-export interface DashboardLoading {
-  isLoading: boolean;
-  
+export interface DashboardOverview {
+    totalTrades: number;
+    openTrades: number;
+    closedTrades: number;
+
+    winningTrades: number;
+    losingTrades: number;
+    breakEvenTrades: number;
+
+    winRate: number;
+
+    totalProfit: number;
+    totalLoss: number;
+    netProfit: number;
+
+    averageRR: number;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                               Performance                                  */
+/* -------------------------------------------------------------------------- */
+
+export interface PerformanceAnalytics {
+    averageWin: number;
+    averageLoss: number;
+
+    largestWin: number;
+    largestLoss: number;
+
+    averageRR: number;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                 Strategy                                   */
+/* -------------------------------------------------------------------------- */
+
+export interface StrategyAnalytics {
+    trades: number;
+    wins: number;
+    losses: number;
+
+    profit: number;
+
+    winRate: number;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                   Pairs                                    */
+/* -------------------------------------------------------------------------- */
+
+export interface PairAnalytics {
+    pair: string;
+
+    totalTrades: number;
+    closedTrades: number;
+
+    wins: number;
+    losses: number;
+    breakEvens: number;
+
+    pnl: number;
+
+    winRate: number;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                    Risk                                    */
+/* -------------------------------------------------------------------------- */
+
+export interface RiskAnalytics {
+    averageRisk: number;
+    averageReward: number;
+    averageRR: number;
+
+    totalRisk: number;
+    totalReward: number;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                Psychology                                  */
+/* -------------------------------------------------------------------------- */
+
+export interface PsychologyAnalytics {
+    mood: string;
+
+    trades: number;
+
+    wins: number;
+    losses: number;
+    breakEvens: number;
+
+    pnl: number;
+
+    winRate: number;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                 Sessions                                   */
+/* -------------------------------------------------------------------------- */
+
+export interface SessionAnalytics {
+    session: string;
+
+    trades: number;
+
+    wins: number;
+    losses: number;
+    breakEvens: number;
+
+    pnl: number;
+
+    winRate: number;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                 Calendar                                   */
+/* -------------------------------------------------------------------------- */
+
+export interface CalendarAnalytics {
+    date: string;
+
+    totalTrades: number;
+
+    wins: number;
+    losses: number;
+    breakEvens: number;
+
+    pnl: number;
+
+    winRate: number;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                              Trade Summary                                 */
+/* -------------------------------------------------------------------------- */
+
+export interface TradeAnalytics {
+    totalTrades: number;
+
+    winRate: number;
+
+    averageProfitLoss: number;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                   Charts                                   */
+/* -------------------------------------------------------------------------- */
+
+export interface DashboardCharts {
+    equityCurve: EquityPoint[];
+    monthlyPnL: MonthlyPnLPoint[];
+    winRateTrend: WinRatePoint[];
+}
+
+export interface EquityPoint {
+    date: string;
+    equity: number;
+}
+
+export interface MonthlyPnLPoint {
+    month: string;
+    pnl: number;
+}
+
+export interface WinRatePoint {
+    trade: number;
+    winRate: number;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                 Portfolio                                  */
+/* -------------------------------------------------------------------------- */
+
+export interface PortfolioSummary {
+    balance: number;
+    equity: number;
+    netProfit: number;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                   Streak                                   */
+/* -------------------------------------------------------------------------- */
+
+export interface TradingStreak {
+    current: number;
+    best: number;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                  Insights                                  */
+/* -------------------------------------------------------------------------- */
+
+export interface DashboardInsight {
+    title: string;
+    description: string;
 }

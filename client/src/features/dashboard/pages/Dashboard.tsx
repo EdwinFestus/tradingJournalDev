@@ -1,68 +1,89 @@
+import DashboardHeader from "../components/headers/DashboardHeader";
 
-import DashboardAnalytics from "../components/dashboards/DashboardAnalytics";
+import DashboardStats from "../components/dashboards/DashboardStats";
 import DashboardCharts from "../components/dashboards/DashboardCharts";
+import DashboardAnalytics from "../components/dashboards/DashboardAnalytics";
+import DashboardStrategy from "../components/dashboards/DashboardStrategy";
+import DashboardTrades from "../components/dashboards/DashboardTrades";
+import DashboardBottom from "../components/dashboards/DashboardBottom";
+import DashboardSessions from "../components/dashboards/DashboardSessions";
+import DashboardPsychology from "../components/dashboards/DashboardPsychology";
+import DashboardInstruments from "../components/dashboards/DashboardInstruments";
+
+import DashboardLoading from "../components/dashboards/DashboardLoading";
 import DashboardError from "../components/dashboards/DashboardError";
 import DashboardEmpty from "../components/dashboards/DashboardEmpty";
-import DashboardHeader from "../components/headers/DashboardHeader";
-import DashboardInsights from "../components/dashboards/DashboardInsights";
-import DashboardLoading from "../components/dashboards/DashboardLoading";
-import DashboardStats from "../components/dashboards/DashboardStats";
-import DashboardTrades from "../components/dashboards/DashboardTrades";
 
-import useDashboard from "../hooks/useDashboard";
-
-
+import { useDashboard } from "../hooks/useDashboard";
 
 export default function Dashboard() {
+    const {
+        dashboard,
+        loading,
+        error,
+        refresh,
+    } = useDashboard();
 
-    const dashboard = useDashboard();
-
-    if (dashboard.loading)
+    if (loading) {
         return <DashboardLoading />;
+    }
 
-    if (dashboard.error)
-        return <DashboardError />;
+    if (error) {
+        return (
+            <DashboardError
+                message={error}
+                onRetry={refresh}
+            />
+        );
+    }
 
-    if (!dashboard.analytics)
+    if (!dashboard) {
         return <DashboardEmpty />;
+    }
 
     return (
-
-        <div className="space-y-8">
-
+        <>
             <DashboardHeader
                 portfolio={dashboard.portfolio}
+                onRefresh={refresh}
             />
 
             <DashboardStats
                 overview={dashboard.analytics.overview}
             />
 
-            <DashboardAnalytics
-                charts={dashboard.analytics}
-                analytics={dashboard.analytics}
-                drawdown={dashboard.drawdown}
-            />
-
             <DashboardCharts
                 charts={dashboard.charts}
-                analytics={dashboard.charts}
-                drawdown={dashboard.drawdown}
+            />
+
+            <DashboardAnalytics
+                analytics={dashboard.analytics}
+            />
+
+            <DashboardStrategy
+                analytics={dashboard.analytics}
+            />
+
+            <DashboardSessions
+                analytics={dashboard.analytics}
+            />
+
+            <DashboardPsychology
+                analytics={dashboard.analytics}
+            />
+
+            <DashboardInstruments
+                analytics={dashboard.analytics}
             />
 
             <DashboardTrades
                 trades={dashboard.recentTrades}
             />
 
-            <DashboardInsights
-                analytics={dashboard.analytics}
+            <DashboardBottom
                 insights={dashboard.insights}
                 streak={dashboard.streak}
-                trades={dashboard.recentTrades}
             />
-
-        </div>
-
+        </>
     );
-
 }
