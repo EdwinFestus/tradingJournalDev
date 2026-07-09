@@ -2,9 +2,14 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 
-import { CssBaseline, ThemeProvider } from "@mui/material";
+// import { CssBaseline, ThemeProvider } from "@mui/material";
 
-import { theme } from "./app/theme/theme";
+import { ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+
+// import { theme } from "./theme";
+
+import { theme } from "./app/theme/index";
 
 import "./index.css";
 

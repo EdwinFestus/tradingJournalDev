@@ -69,6 +69,21 @@ export interface DashboardOverview {
     averageRR: number;
 }
 
+
+export interface Overview {
+    totalTrades: number;
+    openTrades: number;
+    closedTrades: number;
+    winningTrades: number;
+    losingTrades: number;
+    breakEvenTrades: number;
+    winRate: number;
+    totalProfit: number;
+    totalLoss: number;
+    netProfit: number;
+    averageRR: number;
+}
+
 /* -------------------------------------------------------------------------- */
 /*                               Performance                                  */
 /* -------------------------------------------------------------------------- */

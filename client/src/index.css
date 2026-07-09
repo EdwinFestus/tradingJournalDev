@@ -1,6 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
-
 @import "tailwindcss";
+
+@import "@fontsource/jetbrains-mono";
+@import "@fontsource/plus-jakarta-sans";
+
 
 :root {
   color: #111827;
@@ -16,7 +19,7 @@
 }
 
 body {
-  font-family: "Inter", sans-serif;
+  font-family: "Plus Jakarta Sans", sans-serif;
   min-width: 320px;
   margin: 0;
   background:

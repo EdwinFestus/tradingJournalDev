@@ -1,6 +1,6 @@
 import DashboardHeader from "../components/headers/DashboardHeader";
 
-import DashboardStats from "../components/dashboards/DashboardStats";
+import DashboardStats from "../components/dashboards/DashboardStats/DashboardStats";
 import DashboardCharts from "../components/dashboards/DashboardCharts";
 import DashboardAnalytics from "../components/dashboards/DashboardAnalytics";
 import DashboardStrategy from "../components/dashboards/DashboardStrategy";
