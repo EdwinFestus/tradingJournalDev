@@ -1,6 +1,6 @@
-import type { DashboardAnalytics } from "../../types/dashboard.types";
+import type { DashboardOverview } from "../../types/dashboard.types";
 
 export interface OverviewSectionProps {
-  analytics: DashboardAnalytics;
+  overview: DashboardOverview;
   loading?: boolean;
 }

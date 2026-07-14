@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import type { PaperProps } from "@mui/material/Paper";
 
+
 export type AppCardVariant =
     | "default"
     | "interactive"
@@ -10,15 +11,16 @@ export type AppCardVariant =
     | "warning"
     | "danger";
 
+
 export interface AppCardProps
     extends Omit<
         PaperProps,
-        "variant" | "children"
+        "children" | "variant" | "title"
     > {
 
     children: ReactNode;
 
-    // title?: ReactNode;
+    title?: ReactNode;
 
     subtitle?: ReactNode;
 

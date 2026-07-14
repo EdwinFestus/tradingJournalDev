@@ -1,6 +1,6 @@
 import Page from "@/shared/ui/Page";
 
-import DashboardHeader from "../components/headers/DashboardHeader";
+import DashboardHeader from "../../../shared/headers/DashboardHeader";
 
 import OverviewSection from "../components/OverviewSection";
 import PerformanceSection from "../components/PerformanceSection";
@@ -41,10 +41,9 @@ export default function Dashboard() {
           onRefresh={refresh}
       />
 
-      <OverviewSection
-        analytics={analytics}
-        loading={loading}
-      />
+     <OverviewSection
+        overview={analytics.overview}
+    />
 
       <PerformanceSection
         analytics={analytics}
