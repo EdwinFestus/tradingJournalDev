@@ -2,10 +2,10 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import RefreshRoundedIcon from "@mui/icons-material/RefreshRounded";
 
-import  PageHeader from "../ui/PageHeader";
+import PageHeader from "@/shared/ui/PageHeader";
 import PortfolioSummary from "./PortfolioSummary";
 
-import type { PortfolioSummary as Portfolio } from "../../features/dashboard/types/dashboard.types";
+import type { PortfolioSummary as Portfolio } from "@/features/dashboard/types/dashboard.types";
 
 interface DashboardHeaderProps {
     portfolio: Portfolio;
@@ -17,22 +17,22 @@ export default function DashboardHeader({
     onRefresh,
 }: DashboardHeaderProps) {
     return (
-        <PageHeader
-            title="Dashboard"
-            subtitle="Monitor your portfolio, trading performance and analytics."
-            actions={
-                <Button
-                    variant="contained"
-                    startIcon={<RefreshRoundedIcon />}
-                    onClick={onRefresh}
-                >
-                    Refresh
-                </Button>
-            }
-        >
-            <Stack mt={2}>
-                <PortfolioSummary portfolio={portfolio} />
-            </Stack>
-        </PageHeader>
+        <Stack spacing={3} mb={4}>
+            <PageHeader
+                title="Dashboard"
+                subtitle="Monitor your portfolio, trading performance and analytics."
+                actions={
+                    <Button
+                        variant="contained"
+                        startIcon={<RefreshRoundedIcon />}
+                        onClick={onRefresh}
+                    >
+                        Refresh
+                    </Button>
+                }
+            />
+
+            <PortfolioSummary portfolio={portfolio} />
+        </Stack>
     );
 }

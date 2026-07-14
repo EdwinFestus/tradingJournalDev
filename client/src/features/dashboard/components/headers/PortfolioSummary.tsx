@@ -1,4 +1,4 @@
-import Stack from "@mui/material/Stack";
+import Grid from "@mui/material/Grid";
 
 
 import TrendingUpRounded from "@mui/icons-material/TrendingUpRounded";
@@ -21,13 +21,13 @@ export default function PortfolioSummary({
     portfolio,
 }: PortfolioSummaryProps) {
     return (
-        <Stack
-            direction={{
-                xs: "column",
-                md: "row",
+        <Grid
+            container
+            spacing={3}
+            sx={{
+                width: "100%",
+                bgcolor: "red",
             }}
-            spacing={2}
-            width="100%"
         >
             <MetricCard
                 title="Balance"
@@ -54,6 +54,6 @@ export default function PortfolioSummary({
                         : "error.main"
                 }
             />
-        </Stack>
+        </Grid>
     );
 }

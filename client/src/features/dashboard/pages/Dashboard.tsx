@@ -46,7 +46,6 @@ export default function Dashboard() {
     />
 
       <PerformanceSection
-        analytics={analytics}
         charts={charts}
         loading={loading}
       />

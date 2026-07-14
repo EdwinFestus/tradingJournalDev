@@ -2,8 +2,8 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import RefreshRoundedIcon from "@mui/icons-material/RefreshRounded";
 
-import PageHeader from "../../../../shared/ui/PageHeader";
-import PortfolioSummary from "./PortfolioSummary";
+import PageHeader from "@/shared/ui/PageHeader";
+import PortfolioSummary from "@/shared/headers/PortfolioSummary";
 
 import type {
     PortfolioSummary as Portfolio,
