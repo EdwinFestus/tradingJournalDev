@@ -4,7 +4,7 @@ import DashboardHeader from "../../../shared/headers/DashboardHeader";
 
 import OverviewSection from "../components/OverviewSection";
 import PerformanceSection from "../components/PerformanceSection";
-// import AnalyticsSection from "../components/AnalyticsOverviewSection";
+import AnalyticsOverviewSection from "../components/AnalyticsOverviewSection";
 // import StrategySection from "../components/StrategySection";
 // import PsychologySection from "../components/PsychologySection";
 // import SessionSection from "../components/SessionSection";
@@ -49,11 +49,13 @@ export default function Dashboard() {
         charts={charts}
         loading={loading}
       />
+
+    <AnalyticsOverviewSection
+      analytics={analytics}
+    />
+
+
 {/* 
-      <AnalyticsSection
-        analytics={analytics}
-        charts={charts}
-      />
 
       <StrategySection
         analytics={analytics}
