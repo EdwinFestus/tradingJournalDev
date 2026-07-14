@@ -16,7 +16,7 @@ import {
 
 } from "recharts";
 
-import DashboardCard from "../cards/DashboardCard";
+import ChartCard from "@/shared/ui/Cards/ChartCard";
 
 import type {
 
@@ -38,7 +38,7 @@ export default function MonthlyPnLChart({
 
     return (
 
-        <DashboardCard
+        <ChartCard
 
             title="Monthly Profit"
 
@@ -77,7 +77,7 @@ export default function MonthlyPnLChart({
 
             </ResponsiveContainer>
 
-        </DashboardCard>
+        </ChartCard>
 
     );
 

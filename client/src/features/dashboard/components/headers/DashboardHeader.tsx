@@ -2,7 +2,7 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import RefreshRoundedIcon from "@mui/icons-material/RefreshRounded";
 
-import PageHeader from "../../../../shared/ui/PageHeader";
+import  PageHeader from "../../../../shared/ui/PageHeader";
 import PortfolioSummary from "./PortfolioSummary";
 
 import type { PortfolioSummary as Portfolio } from "../../types/dashboard.types";

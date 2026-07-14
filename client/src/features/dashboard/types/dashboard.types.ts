@@ -19,16 +19,6 @@ export interface DashboardData {
 }
 
 
-export interface Insight {
-    title: string;
-    description: string;
-}
-
-export interface Streak {
-    current: number;
-    best: number;
-}
-
 
 
 /* -------------------------------------------------------------------------- */
@@ -69,20 +59,6 @@ export interface DashboardOverview {
     averageRR: number;
 }
 
-
-export interface Overview {
-    totalTrades: number;
-    openTrades: number;
-    closedTrades: number;
-    winningTrades: number;
-    losingTrades: number;
-    breakEvenTrades: number;
-    winRate: number;
-    totalProfit: number;
-    totalLoss: number;
-    netProfit: number;
-    averageRR: number;
-}
 
 /* -------------------------------------------------------------------------- */
 /*                               Performance                                  */

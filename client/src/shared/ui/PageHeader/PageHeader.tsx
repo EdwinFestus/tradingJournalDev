@@ -1,15 +1,10 @@
-import Box from "@mui/material/Box";
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
-import type { ReactNode } from "react";
+import {
+    Box,
+    Stack,
+    Typography,
+} from "@mui/material";
 
-interface PageHeaderProps {
-    title: string;
-    subtitle?: string;
-    actions?: ReactNode;
-    children?: ReactNode;
-}
+import type { PageHeaderProps } from "./PageHeader.types";
 
 export default function PageHeader({
     title,
@@ -18,7 +13,7 @@ export default function PageHeader({
     children,
 }: PageHeaderProps) {
     return (
-        <Box sx={{ mb: 4 }}>
+        <Box mb={4}>
             <Stack
                 direction={{
                     xs: "column",
@@ -32,18 +27,15 @@ export default function PageHeader({
                 spacing={2}
             >
                 <Box>
-                    <Typography
-                        variant="h4"
-                        fontWeight={700}
-                    >
+                    <Typography variant="h3">
                         {title}
                     </Typography>
 
                     {subtitle && (
                         <Typography
                             mt={1}
-                            color="text.secondary"
                             variant="body1"
+                            color="text.secondary"
                         >
                             {subtitle}
                         </Typography>
@@ -54,11 +46,9 @@ export default function PageHeader({
             </Stack>
 
             {children && (
-                <>
-                    <Divider sx={{ my: 3 }} />
-
+                <Box mt={3}>
                     {children}
-                </>
+                </Box>
             )}
         </Box>
     );

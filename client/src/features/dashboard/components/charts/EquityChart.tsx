@@ -16,7 +16,7 @@ import {
 
 } from "recharts";
 
-import DashboardCard from "../cards/DashboardCard";
+import ChartCard from "@/shared/ui/Cards/ChartCard";
 
 import type {
 
@@ -38,7 +38,7 @@ export default function EquityChart({
 
     return (
 
-        <DashboardCard
+        <ChartCard
 
             title="Equity Curve"
 
@@ -109,7 +109,7 @@ export default function EquityChart({
 
             </ResponsiveContainer>
 
-        </DashboardCard>
+        </ChartCard>
 
     );
 

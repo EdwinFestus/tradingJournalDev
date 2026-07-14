@@ -1,65 +1,53 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import DashboardService from "../services/dashboardService";
 
-import type {
-    DashboardData,
-} from "../types/dashboard.types";
+import type { DashboardData } from "../types/dashboard.types";
 
 export function useDashboard() {
+  const [dashboard, setDashboard] = useState<DashboardData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-    const [dashboard, setDashboard] =
-        useState<DashboardData | null>(null);
+  const  loadDashboard =  async() => {
+    try {
+      setLoading(true);
+      setError(null);
 
-    const [loading, setLoading] =
-        useState(true);
+      const response = await DashboardService.getDashboard();
 
-    const [error, setError] =
-        useState<string | null>(null);
+      setDashboard(response);
+    } catch (err) {
+      console.error(err);
+      setError("Failed to load dashboard.");
+    } finally {
+      setLoading(false);
+    }
+  }
 
-    const fetchDashboard = useCallback(async () => {
+ useEffect(() => {
+  void loadDashboard();
+}, []);
 
-        try {
+  const data = useMemo(
+    () => ({
+      analytics: dashboard?.analytics ?? null,
+      charts: dashboard?.charts ?? null,
+      portfolio: dashboard?.portfolio ?? null,
+      trades: dashboard?.recentTrades ?? [],
+      insights: dashboard?.insights ?? [],
+      streak: dashboard?.streak ?? null,
+    }),
+    [dashboard]
+  );
 
-            setLoading(true);
+  return {
+    dashboard,
+    ...data,
 
-            setError(null);
+    loading,
+    error,
 
-            const response =
-                await DashboardService.getDashboard();
-
-            setDashboard(response);
-
-        } catch (error) {
-
-            console.error(error);
-
-            setError("Failed to load dashboard.");
-
-        } finally {
-
-            setLoading(false);
-
-        }
-
-    }, []);
-
-    useEffect(() => {
-
-        fetchDashboard();
-
-    }, [fetchDashboard]);
-
-    return {
-
-        dashboard,
-
-        loading,
-
-        error,
-
-        refresh: fetchDashboard,
-
-    };
-
+    refresh: loadDashboard,
+  };
 }

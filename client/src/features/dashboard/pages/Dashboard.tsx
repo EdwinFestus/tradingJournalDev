@@ -1,89 +1,82 @@
+import Page from "@/shared/ui/Page";
+
 import DashboardHeader from "../components/headers/DashboardHeader";
 
-import DashboardStats from "../components/dashboards/DashboardStats/DashboardStats";
-import DashboardCharts from "../components/dashboards/DashboardCharts";
-import DashboardAnalytics from "../components/dashboards/DashboardAnalytics";
-import DashboardStrategy from "../components/dashboards/DashboardStrategy";
-import DashboardTrades from "../components/dashboards/DashboardTrades";
-import DashboardBottom from "../components/dashboards/DashboardBottom";
-import DashboardSessions from "../components/dashboards/DashboardSessions";
-import DashboardPsychology from "../components/dashboards/DashboardPsychology";
-import DashboardInstruments from "../components/dashboards/DashboardInstruments";
-
-import DashboardLoading from "../components/dashboards/DashboardLoading";
-import DashboardError from "../components/dashboards/DashboardError";
-import DashboardEmpty from "../components/dashboards/DashboardEmpty";
+import OverviewSection from "../components/OverviewSection";
+import PerformanceSection from "../components/PerformanceSection";
+// import AnalyticsSection from "../components/AnalyticsOverviewSection";
+// import StrategySection from "../components/StrategySection";
+// import PsychologySection from "../components/PsychologySection";
+// import SessionSection from "../components/SessionSection";
+// import TradesSection from "../components/TradesSection";
+// import InsightsSection from "../components/InsightsSection";
 
 import { useDashboard } from "../hooks/useDashboard";
 
 export default function Dashboard() {
-    const {
-        dashboard,
-        loading,
-        error,
-        refresh,
-    } = useDashboard();
+  const {
+    analytics,
+    charts,
+    // trades,
+    // insights,
+    // streak,
+    portfolio,
+    refresh,
+    loading,
+    error,
+  } = useDashboard();
 
-    if (loading) {
-        return <DashboardLoading />;
-    }
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
-    if (error) {
-        return (
-            <DashboardError
-                message={error}
-                onRetry={refresh}
-            />
-        );
-    }
+  if (error || !analytics || !charts) {
+    return <div>{error ?? "Unable to load dashboard."}</div>;
+  }
 
-    if (!dashboard) {
-        return <DashboardEmpty />;
-    }
+  return (
+    <Page>
+      <DashboardHeader
+          portfolio={portfolio!}
+          onRefresh={refresh}
+      />
 
-    return (
-        <>
-            <DashboardHeader
-                portfolio={dashboard.portfolio}
-                onRefresh={refresh}
-            />
+      <OverviewSection
+        analytics={analytics}
+        loading={loading}
+      />
 
-            <DashboardStats
-                overview={dashboard.analytics.overview}
-            />
+      <PerformanceSection
+        analytics={analytics}
+        charts={charts}
+        loading={loading}
+      />
+{/* 
+      <AnalyticsSection
+        analytics={analytics}
+        charts={charts}
+      />
 
-            <DashboardCharts
-                charts={dashboard.charts}
-            />
+      <StrategySection
+        analytics={analytics}
+      />
 
-            <DashboardAnalytics
-                analytics={dashboard.analytics}
-            />
+      <PsychologySection
+        analytics={analytics}
+      />
 
-            <DashboardStrategy
-                analytics={dashboard.analytics}
-            />
+      <SessionSection
+        analytics={analytics}
+      />
 
-            <DashboardSessions
-                analytics={dashboard.analytics}
-            />
+      <TradesSection
+        trades={trades ?? []}
+      />
 
-            <DashboardPsychology
-                analytics={dashboard.analytics}
-            />
-
-            <DashboardInstruments
-                analytics={dashboard.analytics}
-            />
-
-            <DashboardTrades
-                trades={dashboard.recentTrades}
-            />
-
-            <DashboardBottom
-                insights={dashboard.insights}
-                streak={dashboard.streak}
-            />
-        </>
-    );
+      <InsightsSection
+        insights={insights ?? []}
+        streak={streak}
+      /> */}
+    </Page>
+  );
 }

@@ -1,61 +1,59 @@
-import Grid from "@mui/material/Grid";
-import {
-    Wallet,
-    Landmark,
-    TrendingUp,
-    Flame,
-} from "lucide-react";
+import Stack from "@mui/material/Stack";
 
-import MetricCard from "../../../../shared/ui/MetricCard";
 
-import type { PortfolioSummary } from "../../types/dashboard.types";
+import TrendingUpRounded from "@mui/icons-material/TrendingUpRounded";
+import AccountBalanceWalletRounded from "@mui/icons-material/AccountBalanceWalletRounded";
+import ShowChartRounded from "@mui/icons-material/ShowChartRounded";
 
-interface Props {
-    portfolio: PortfolioSummary;
+import MetricCard from "../../../../shared/ui/Cards/MetricCard";
+
+import type {
+    PortfolioSummary as Portfolio,
+} from "../../types/dashboard.types";
+
+import  formatCurrency  from "../../utils/formatCurrency";
+
+interface PortfolioSummaryProps {
+    portfolio: Portfolio;
 }
 
 export default function PortfolioSummary({
     portfolio,
-}: Props) {
+}: PortfolioSummaryProps) {
     return (
-        <Grid container spacing={3}>
-            <Grid size={{ xs: 12, md: 3 }}>
-                <MetricCard
-                    title="Balance"
-                    value={`$${portfolio.balance.toFixed(2)}`}
-                    subtitle="Account Balance"
-                    icon={<Wallet size={24} />}
-                />
-            </Grid>
+        <Stack
+            direction={{
+                xs: "column",
+                md: "row",
+            }}
+            spacing={2}
+            width="100%"
+        >
+            <MetricCard
+                title="Balance"
+                value={formatCurrency(portfolio.balance)}
+                subtitle="Account Balance"
+                icon={<AccountBalanceWalletRounded />}
+            />
 
-            <Grid size={{ xs: 12, md: 3 }}>
-                <MetricCard
-                    title="Equity"
-                    value={`$${portfolio.equity.toFixed(2)}`}
-                    subtitle="Current Equity"
-                    icon={<Landmark size={24} />}
-                />
-            </Grid>
+            <MetricCard
+                title="Equity"
+                value={formatCurrency(portfolio.equity)}
+                subtitle="Current Equity"
+                icon={<ShowChartRounded />}
+            />
 
-            <Grid size={{ xs: 12, md: 3 }}>
-                <MetricCard
-                    title="Net Profit"
-                    value={`$${portfolio.netProfit.toFixed(2)}`}
-                    subtitle="Overall Performance"
-                    icon={<TrendingUp size={24} />}
-                    color="success.main"
-                />
-            </Grid>
-
-            <Grid size={{ xs: 12, md: 3 }}>
-                <MetricCard
-                    title="Current Streak"
-                    value="🔥 0"
-                    subtitle="Winning Streak"
-                    icon={<Flame size={24} />}
-                    color="warning.main"
-                />
-            </Grid>
-        </Grid>
+            <MetricCard
+                title="Net Profit"
+                value={formatCurrency(portfolio.netProfit)}
+                subtitle="Overall Performance"
+                icon={<TrendingUpRounded />}
+                color={
+                    portfolio.netProfit >= 0
+                        ? "success.main"
+                        : "error.main"
+                }
+            />
+        </Stack>
     );
 }
