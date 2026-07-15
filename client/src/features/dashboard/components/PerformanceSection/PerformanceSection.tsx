@@ -1,5 +1,7 @@
 import Grid from "@mui/material/Grid";
 
+import Section from "../../../../shared/ui/Section";
+
 import EquityChart from "../charts/EquityChart";
 import MonthlyPnLChart from "../charts/MonthlyPnLChart";
 
@@ -11,22 +13,26 @@ export default function PerformanceSection({
     charts,
 }: PerformanceSectionProps) {
     return (
-        <Grid
-            container
-            spacing={3}
-            mt={1}
+        <Section
+            title="Performance"
+            subtitle="Visualize your trading performance over time."
         >
-            <Grid size={{ xs: 12, lg: 8 }}>
-                <EquityChart
-                    data={charts.equityCurve}
-                />
-            </Grid>
+            <Grid
+                container
+                spacing={3}
+            >
+                <Grid size={{ xs: 12, lg: 8 }}>
+                    <EquityChart
+                        data={charts.equityCurve}
+                    />
+                </Grid>
 
-            <Grid size={{ xs: 12, lg: 4 }}>
-                <MonthlyPnLChart
-                    data={charts.monthlyPnL}
-                />
+                <Grid size={{ xs: 12, lg: 4 }}>
+                    <MonthlyPnLChart
+                        data={charts.monthlyPnL}
+                    />
+                </Grid>
             </Grid>
-        </Grid>
+        </Section>
     );
 }
