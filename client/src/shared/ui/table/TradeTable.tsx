@@ -1,6 +1,6 @@
 import { DataGrid } from "@mui/x-data-grid";
 
-import { useTradeStore } from "../../../features/trade/store/tradeStore";
+import { useTradeStore } from "@/features/trade/store/tradeStore";
 import { tradeColumns } from "./columns";
 
 export default function TradeTable() {

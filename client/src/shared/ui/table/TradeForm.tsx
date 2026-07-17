@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import { useForm } from "react-hook-form";
 
-import { useTradeStore } from "../../../features/trade/store/tradeStore";
+import { useTradeStore } from "@/features/trade/store/tradeStore";
 import {
   tradeSchema,
   type TradeFormData,

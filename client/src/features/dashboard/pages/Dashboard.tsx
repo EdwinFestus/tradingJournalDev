@@ -1,6 +1,6 @@
 import Page from "@/shared/ui/Page";
 
-import DashboardHeader from "../../../shared/headers/DashboardHeader";
+import DashboardHeader from "../components/dashboardHeader/DashboardHeader";
 
 import OverviewSection from "../components/OverviewSection";
 import PerformanceSection from "../components/PerformanceSection";
@@ -37,7 +37,7 @@ export default function Dashboard() {
   return (
     <Page>
       <DashboardHeader
-          portfolio={portfolio!}
+          portfolioSummary={portfolio!}
           onRefresh={refresh}
       />
 

@@ -1,7 +1,7 @@
 import type { GridColDef } from "@mui/x-data-grid";
 
 import StatusChip from "./StatusChip";
-import TradeActions from "../../../features/trade/components/TradeActions";
+import TradeActions from "@/features/trade/components/TradeActions";
 
 export const tradeColumns: GridColDef[] = [
   {

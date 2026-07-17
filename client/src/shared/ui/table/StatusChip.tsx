@@ -1,6 +1,6 @@
 import Chip from "@mui/material/Chip";
 
-import type { Trade } from "../../types/trade";
+import type { Trade } from "@/features/trade/types/trade";
 
 interface Props {
   status: Trade["outcome"];
