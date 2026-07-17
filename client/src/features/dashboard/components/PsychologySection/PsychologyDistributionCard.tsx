@@ -2,19 +2,22 @@ import ChartCard from "../../../../shared/ui/Cards/ChartCard";
 
 import PsychologyChart from "../charts/PsychologyChart";
 
-import type { DashboardAnalytics } from "../../types/dashboard.types";
+import type {
+    DashboardAnalytics,
+} from "../../types/dashboard.types";
 
 interface Props {
     analytics: DashboardAnalytics;
 }
 
-export default function PsychologyChartCard({
+export default function PsychologyDistributionCard({
     analytics,
 }: Props) {
     return (
         <ChartCard
-            title="Psychology Trend"
-            subtitle="Trading emotions over time"
+            title="Emotion Distribution"
+            subtitle="Trading emotions"
+            fullHeight
         >
             <PsychologyChart
                 data={analytics.psychology}

@@ -2,7 +2,7 @@ import { ArrowForward, Lock, Mail } from "@mui/icons-material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { useAuthStore } from "../../../shared/store/authStore";
+import { useAuthStore } from "../store/authStore";
 
 const Login = () => {
   const navigate = useNavigate();

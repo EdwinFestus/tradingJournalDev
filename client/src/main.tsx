@@ -14,7 +14,7 @@ import { theme } from "./app/theme/index";
 import "./index.css";
 
 import App from "./app/App";
-import ScrollToTop from "./shared/components/common/ScrollToTop";
+import ScrollToTop from "./shared/ui/common/ScrollToTop";
 
 createRoot(document.getElementById("root")!).render(
     <StrictMode>

@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 
-import TradeTable from "../../../shared/components/trade/TradeTable";
-import TradeToolbar from "../../../shared/components/trade/TradeToolbar";
-import { useTradeStore } from "../../../shared/store/tradeStore";
+import TradeTable from "../../../shared/ui/table/TradeTable";
+import TradeToolbar from "../../../shared/ui/table/TradeToolbar";
+import { useTradeStore } from "../store/tradeStore";
 
 export default function TradeJournal() {
   const fetchTrades = useTradeStore(

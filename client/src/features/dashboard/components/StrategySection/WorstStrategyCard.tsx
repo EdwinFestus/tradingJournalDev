@@ -1,4 +1,4 @@
-import EmojiEventsRoundedIcon from "@mui/icons-material/EmojiEventsRounded";
+import WarningAmberRoundedIcon from "@mui/icons-material/WarningAmberRounded";
 
 import MetricCard from "../../../../shared/ui/Cards/MetricCard";
 
@@ -7,29 +7,29 @@ import type {
 } from "../../types/dashboard.types";
 
 import {
-    getTopStrategy,
+    getWorstStrategy,
 } from "../../utils/strategyHelpers";
 
 interface Props {
     analytics: DashboardAnalytics;
 }
 
-export default function TopStrategyCard({
+export default function WorstStrategyCard({
     analytics,
 }: Props) {
 
     const strategy =
-        getTopStrategy(analytics);
+        getWorstStrategy(analytics);
 
     if (!strategy) return null;
 
     return (
         <MetricCard
-            title="Best Strategy"
+            title="Worst Strategy"
             value={strategy.strategy}
             subtitle={`${strategy.winRate.toFixed(1)}% Win Rate`}
-            icon={<EmojiEventsRoundedIcon />}
-            color="success.main"
+            icon={<WarningAmberRoundedIcon />}
+            color="error.main"
         />
     );
 }

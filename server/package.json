@@ -4,6 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "seed": "node scripts/seedTrades.js",
     "dev": "nodemon src/server.js",
     "start": "node src/server.js"
   },

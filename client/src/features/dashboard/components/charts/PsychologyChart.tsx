@@ -1,4 +1,3 @@
-import { Paper, Typography } from "@mui/material";
 import {
     ResponsiveContainer,
     PieChart,
@@ -30,50 +29,34 @@ export default function PsychologyChart({
     data,
 }: Props) {
     return (
-        <Paper
-            sx={{
-                p: 3,
-                borderRadius: 6,
-                height: 420,
-            }}
+        <ResponsiveContainer
+            width="100%"
+            height={350}
         >
-            <Typography variant="h6" fontWeight={700}>
-                Trading Psychology
-            </Typography>
+            <PieChart>
+                <Pie
+                    data={data}
+                    dataKey="trades"
+                    nameKey="mood"
+                    outerRadius={110}
+                    label
+                >
+                    {data.map((_, index) => (
+                        <Cell
+                            key={index}
+                            fill={
+                                COLORS[
+                                    index % COLORS.length
+                                ]
+                            }
+                        />
+                    ))}
+                </Pie>
 
-            <Typography
-                variant="body2"
-                color="text.secondary"
-                sx={{ mb: 2 }}
-            >
-                Mood distribution
-            </Typography>
+                <Tooltip />
 
-            <ResponsiveContainer
-                width="100%"
-                height="85%"
-            >
-                <PieChart>
-                    <Pie
-                        data={data}
-                        dataKey="trades"
-                        nameKey="mood"
-                        outerRadius={110}
-                        label
-                    >
-                        {data.map((_, index) => (
-                            <Cell
-                                key={index}
-                                fill={COLORS[index % COLORS.length]}
-                            />
-                        ))}
-                    </Pie>
-
-                    <Tooltip />
-
-                    <Legend />
-                </PieChart>
-            </ResponsiveContainer>
-        </Paper>
+                <Legend />
+            </PieChart>
+        </ResponsiveContainer>
     );
 }

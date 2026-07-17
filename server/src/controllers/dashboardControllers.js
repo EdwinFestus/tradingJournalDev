@@ -8,8 +8,10 @@ import { getDashboard } from "../services/dashboardService.js";
  */
 
 export const getDashboardData = async (req, res) => {
+  console.log("Logged in user:", req.user);
   try {
     const dashboard = await getDashboard(req.user._id);
+
 
     return res.status(200).json({
       success: true,
