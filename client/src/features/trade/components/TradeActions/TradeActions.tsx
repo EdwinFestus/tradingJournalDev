@@ -9,9 +9,9 @@ import {
 
 import { IconButton, Tooltip } from "@mui/material";
 
-import CloseTradeDialog from "./CloseTradeDialog";
+import CloseTradeDialog from "../CloseTradeDialog";
 
-import type { Trade } from "../../../shared/types/trade";
+import type { Trade } from "../../types/trade";
 
 interface TradeActionsProps {
   trade: Trade;

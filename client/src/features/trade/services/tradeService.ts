@@ -1,50 +1,102 @@
 import api from "@/shared/lib/api";
+
+import type { Trade } from "../types/trade";
 import type { CreateTradeDto } from "../types/createTrade";
 
-export const getTrades = async () => {
-  const { data } = await api.get("/trades");
-  return data;
+/**
+ * ============================================================================
+ * API Response Types
+ * ============================================================================
+ */
+
+interface ApiResponse<T> {
+  success: boolean;
+  message?: string;
+  data: T;
+}
+
+export interface Pagination {
+  page: number;
+  limit: number;
+  total: number;
+  pages: number;
+}
+
+export interface TradeListResponse {
+  trades: Trade[];
+  pagination: Pagination;
+}
+
+/**
+ * ============================================================================
+ * GET ALL TRADES
+ * ============================================================================
+ */
+export const getTrades = async (): Promise<TradeListResponse> => {
+  const response =
+    await api.get<ApiResponse<TradeListResponse>>(
+      "/trades"
+    );
+
+  return response.data.data;
 };
 
-
+/**
+ * ============================================================================
+ * GET SINGLE TRADE
+ * ============================================================================
+ */
 export const getTradeById = async (
-
   id: string
-) => {
-  const { data } = await api.get(
-    `/trades/${id}`
-  );
+): Promise<Trade> => {
+  const response =
+    await api.get<ApiResponse<Trade>>(
+      `/trades/${id}`
+    );
 
-  return data;
+  return response.data.data;
 };
 
+/**
+ * ============================================================================
+ * CREATE TRADE
+ * ============================================================================
+ */
 export const createTrade = async (
   tradeData: CreateTradeDto
-) => {
-  const { data } = await api.post(
-    "/trades",
-    tradeData
-  );
+): Promise<Trade> => {
+  const response =
+    await api.post<ApiResponse<Trade>>(
+      "/trades",
+      tradeData
+    );
 
-  return data;
+  return response.data.data;
 };
 
+/**
+ * ============================================================================
+ * UPDATE TRADE
+ * ============================================================================
+ */
 export const updateTrade = async (
   id: string,
   tradeData: Record<string, unknown>
-) => {
-  const { data } = await api.patch(
-    `/trades/${id}`,
-    tradeData
-  );
+): Promise<Trade> => {
+  const response =
+    await api.patch<ApiResponse<Trade>>(
+      `/trades/${id}`,
+      tradeData
+    );
 
-  console.log(tradeData);
-  console.log(data);
-
-  return data;
+  return response.data.data;
 };
 
-
+/**
+ * ============================================================================
+ * CLOSE TRADE
+ * ============================================================================
+ */
 export const closeTrade = async (
   id: string,
   tradeData: {
@@ -52,21 +104,25 @@ export const closeTrade = async (
     commission?: number;
     slippage?: number;
   }
-) => {
-  const { data } = await api.patch(
-    `/trades/${id}/close`,
-    tradeData
-  );
+): Promise<Trade> => {
+  const response =
+    await api.patch<ApiResponse<Trade>>(
+      `/trades/${id}/close`,
+      tradeData
+    );
 
-  return data;
+  return response.data.data;
 };
 
+/**
+ * ============================================================================
+ * DELETE TRADE
+ * ============================================================================
+ */
 export const deleteTrade = async (
   id: string
-) => {
-  const { data } = await api.delete(
+): Promise<void> => {
+  await api.delete<ApiResponse<null>>(
     `/trades/${id}`
   );
-
-  return data;
 };

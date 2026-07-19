@@ -1,0 +1,33 @@
+trade/
+
+components/
+
+    TradeForm/
+
+        TradeForm.tsx
+
+        TradeInformation.tsx
+
+        TradeSetup.tsx
+
+        PositionSection.tsx
+
+        PsychologySection.tsx
+
+        NotesSection.tsx
+
+        SubmitSection.tsx
+
+        index.ts
+
+shared/
+
+    forms/
+
+        FormTextField.tsx
+
+        FormNumberField.tsx
+
+        FormSelect.tsx
+
+        FormSlider.tsx

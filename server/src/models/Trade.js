@@ -1,4 +1,9 @@
     import mongoose from "mongoose";
+    import {
+    ORDER_TYPES,
+    TIMEFRAMES,
+    STRATEGIES,
+} from "../constants/tradeConstants.js";
 
 
     const tradeSchema = new mongoose.Schema({
@@ -14,11 +19,7 @@
             trim: true,
         },
 
-        orderType: {
-            type: String,
-            enum: ["BUY", "SELL"],
-            required: true,
-        },
+     
 
         entry: {
             type: Number,
@@ -51,19 +52,23 @@
             default: "Personal",
         },
 
+
+        orderType: {
+            type: String,
+            enum: ORDER_TYPES,
+            required: true,
+        },
+
         strategy: {
             type: String,
-            enum: [
-                "SMC",
-                "Liquidity Grab",
-                "Trendline Break",
-                "Double Top",
-                "Double Bottom",
-                "Head & Shoulders",
-                "Expansion",
-                "Other",
-            ],
-            default: "Other",
+            enum: STRATEGIES,
+            required: true,
+        },
+
+        timeframe: {
+            type: String,
+            enum: TIMEFRAMES,
+            required: true,
         },
 
         marketCondition: {
@@ -97,18 +102,7 @@
             default: 0,
         },
 
-        timeframe: {
-            type: String,
-            enum: [
-                "1M",
-                "5M",
-                "15M",
-                "30M",
-                "1H",
-                "4H",
-                "1D",
-            ],
-        },
+  
 
         tradeDate: {
             type: Date,

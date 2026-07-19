@@ -1,137 +1,164 @@
 import { create } from "zustand";
+
 import * as tradeService from "../services/tradeService";
-import type { Trade } from "../types/trade"
+
+import type { Trade } from "../types/trade";
 import type { CreateTradeDto } from "../types/createTrade";
 
+/**
+ * ============================================================================
+ * Pagination
+ * ============================================================================
+ */
+interface Pagination {
+  page: number;
+  limit: number;
+  total: number;
+  pages: number;
+}
 
+/**
+ * ============================================================================
+ * Trade Store
+ * ============================================================================
+ */
 interface TradeStore {
   trades: Trade[];
+  pagination: Pagination | null;
+
   loading: boolean;
-  error:  string | null;
- deleteTrade: (
-      id: string
-  ) => Promise<void>;
+  error: string | null;
 
   fetchTrades: () => Promise<void>;
 
   createTrade: (
-     tradeData: CreateTradeDto
+    tradeData: CreateTradeDto
   ) => Promise<void>;
 
   updateTrade: (
-      id: string,
-      tradeData: Record<string, unknown>
+    id: string,
+    tradeData: Record<string, unknown>
+  ) => Promise<void>;
+
+  deleteTrade: (
+    id: string
   ) => Promise<void>;
 }
 
-export const useTradeStore = create<TradeStore>(
-  (set) => ({
+export const useTradeStore = create<TradeStore>((set) => {
+  /**
+   * --------------------------------------------------------------------------
+   * Reload trades after every CRUD operation
+   * --------------------------------------------------------------------------
+   */
+  const refreshTrades = async () => {
+    const result =
+      await tradeService.getTrades();
+
+    set({
+      trades: result.trades,
+      pagination: result.pagination,
+    });
+  };
+
+  return {
     trades: [],
+    pagination: null,
+
     loading: false,
     error: null,
 
+    /**
+     * --------------------------------------------------------------------------
+     * Fetch Trades
+     * --------------------------------------------------------------------------
+     */
     fetchTrades: async () => {
-        try {
-          set({
-            loading: true,
-            error: null,
-          });
+      try {
+        set({
+          loading: true,
+          error: null,
+        });
 
-          const trades = await tradeService.getTrades();
+        await refreshTrades();
 
-          set({
-            trades,
-            loading: false,
-            error: null,
-          });
+        set({
+          loading: false,
+        });
 
-        } catch (error) {
-          console.error(error);
+      } catch (error) {
+        console.error(error);
 
-          set({
-            loading: false,
-            error: "Unable to load trades.",
-          });
-        }
-      },
+        set({
+          loading: false,
+          error:
+            error instanceof Error
+              ? error.message
+              : "Unable to load trades.",
+        });
+      }
+    },
 
+    /**
+     * --------------------------------------------------------------------------
+     * Create Trade
+     * --------------------------------------------------------------------------
+     */
+    createTrade: async (tradeData) => {
+      try {
+        await tradeService.createTrade(tradeData);
 
-      // =============== Delete Trade ================
-      deleteTrade: async (id) => {
+        await refreshTrades();
+      } catch (error) {
+        console.error("Create Trade Error:", error)
 
-          try {
-
-              await tradeService.deleteTrade(id);
-
-              console.log(`=======================`)
-              console.log(`Trade with the __id: ${id} has been deleted Successfully`)
-              console.log(`=======================`)
-
-              const trades =
-                  await tradeService.getTrades();
-
-              set({
-                  trades,
-              });
-
-          } catch (error) {
-
-              console.error(error);
-
-          }
-
-      },
-
-      // Update Trades 
-
-      updateTrade: async (
-          id,
-          tradeData
-      ) => {
-
-          try {
-
-              await tradeService.updateTrade(
-                  id,
-                  tradeData
-              );
-
-              const trades =
-                  await tradeService.getTrades();
-
-              set({
-                  trades,
-              });
-
-          } catch (error) {
-
-              console.error(error);
-
-          }
-
-      },
-
-
-    createTrade: async (
+        throw error;
+      }
+    },
+    /**
+     * --------------------------------------------------------------------------
+     * Update Trade
+     * --------------------------------------------------------------------------
+     */
+    updateTrade: async (
+      id,
       tradeData
     ) => {
       try {
-        await tradeService.createTrade(
+        await tradeService.updateTrade(
+          id,
           tradeData
         );
 
-        const trades =
-          await tradeService.getTrades();
+        await refreshTrades();
 
-        set({
-          trades,
-        });
       } catch (error) {
         console.error(error);
       }
     },
 
-  
+    /**
+     * --------------------------------------------------------------------------
+     * Delete Trade
+     * --------------------------------------------------------------------------
+     */
+    deleteTrade: async (
+      id
+    ) => {
+      try {
+        await tradeService.deleteTrade(
+          id
+        );
 
-  })
-);
+        console.log(
+          `Trade ${id} deleted successfully.`
+        );
+
+        await refreshTrades();
+
+      } catch (error) {
+        console.error(error);
+      }
+    },
+  };
+});

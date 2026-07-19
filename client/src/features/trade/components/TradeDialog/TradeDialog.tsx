@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 
-import TradeForm from "../../../shared/ui/table/TradeForm";
+import TradeForm from "../TradeForm";
 
 export default function TradeDialog() {
   const [open, setOpen] = useState(false);

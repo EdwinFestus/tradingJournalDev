@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
+  Alert,
   Button,
   Grid,
   MenuItem,
@@ -11,7 +13,7 @@ import { useTradeStore } from "@/features/trade/store/tradeStore";
 import {
   tradeSchema,
   type TradeFormData,
-} from "../../validation/tradeSchema";
+} from "@/features/trade/validation/tradeSchema";
 
 interface Props {
   onSuccess: () => void;
@@ -30,10 +32,17 @@ export default function TradeForm({
     (state) => state.createTrade
   );
 
+  const [submitError, setSubmitError] =
+    useState("");
+
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    reset,
+    formState: {
+      errors,
+      isSubmitting,
+    },
   } = useForm<TradeFormData>({
     resolver: zodResolver(tradeSchema),
   });
@@ -41,14 +50,53 @@ export default function TradeForm({
   const onSubmit = async (
     data: TradeFormData
   ) => {
-    await createTrade(data);
+    setSubmitError("");
 
-    onSuccess();
+    // console.log("Trade form submitted:", data); 
+
+    try {
+      console.log("Submitting Trade:", data);
+
+      await createTrade(data);
+
+
+        console.log("Trade created successfully");
+
+      reset();
+
+      onSuccess();
+    } catch (error) {
+      console.error(error);
+
+      setSubmitError(
+        error instanceof Error
+          ? error.message
+          : "Unable to create trade."
+      );
+        console.error("Create trade failed:", error);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form
+        onSubmit={handleSubmit(
+            onSubmit,
+            (errors) => {
+            console.log("VALIDATION FAILED");
+            console.log(errors);
+            }
+        )}
+        >
       <Grid container spacing={2}>
+
+        {submitError && (
+          <Grid size={12}>
+            <Alert severity="error">
+              {submitError}
+            </Alert>
+          </Grid>
+        )}
+
         <Grid size={{ xs: 12, md: 6 }}>
           <TextField
             label="Pair"
@@ -63,9 +111,9 @@ export default function TradeForm({
         <Grid size={{ xs: 12, md: 6 }}>
           <TextField
             select
-            fullWidth
             label="Direction"
             defaultValue="BUY"
+            fullWidth
             sx={inputSx}
             {...register("orderType")}
           >
@@ -77,9 +125,9 @@ export default function TradeForm({
         <Grid size={{ xs: 12, md: 6 }}>
           <TextField
             select
-            fullWidth
             label="Timeframe"
             defaultValue="15M"
+            fullWidth
             sx={inputSx}
             {...register("timeframe")}
           >
@@ -108,37 +156,53 @@ export default function TradeForm({
             type="number"
             fullWidth
             sx={inputSx}
-            {...register("entry")}
+            {...register("entry", {
+              valueAsNumber: true,
+            })}
+            error={!!errors.entry}
+            helperText={errors.entry?.message}
           />
         </Grid>
 
         <Grid size={{ xs: 12, md: 4 }}>
           <TextField
-            label="Stop loss"
+            label="Stop Loss"
             type="number"
             fullWidth
             sx={inputSx}
-            {...register("stopLoss")}
+            {...register("stopLoss", {
+              valueAsNumber: true,
+            })}
+            error={!!errors.stopLoss}
+            helperText={errors.stopLoss?.message}
           />
         </Grid>
 
         <Grid size={{ xs: 12, md: 4 }}>
           <TextField
-            label="Take profit"
+            label="Take Profit"
             type="number"
             fullWidth
             sx={inputSx}
-            {...register("takeProfit")}
+            {...register("takeProfit", {
+              valueAsNumber: true,
+            })}
+            error={!!errors.takeProfit}
+            helperText={errors.takeProfit?.message}
           />
         </Grid>
 
         <Grid size={{ xs: 12, md: 6 }}>
           <TextField
-            label="Lot size"
+            label="Lot Size"
             type="number"
             fullWidth
             sx={inputSx}
-            {...register("lotSize")}
+            {...register("lotSize", {
+              valueAsNumber: true,
+            })}
+            error={!!errors.lotSize}
+            helperText={errors.lotSize?.message}
           />
         </Grid>
 
@@ -172,7 +236,9 @@ export default function TradeForm({
               },
             }}
           >
-            Save trade
+            {isSubmitting
+              ? "Saving..."
+              : "Save Trade"}
           </Button>
         </Grid>
       </Grid>
