@@ -11,7 +11,7 @@
  * ============================================================================
  */
 
-import { SxProps, Theme } from "@mui/material";
+import type { SxProps, Theme } from "@mui/material";
 
 import {
     FORM_BORDER_RADIUS,
