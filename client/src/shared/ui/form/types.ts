@@ -1,172 +1,106 @@
 /**
  * ============================================================================
  * File: types.ts
- * Path: src/shared/ui/form/types.ts
+ * Path:
+ * src/shared/ui/form/types.ts
  *
- * Description:
- * Shared TypeScript interfaces for reusable form components.
- *
- * Author:
- * ELLA Frontend v2
+ * Shared types for reusable form components.
  * ============================================================================
  */
 
 import type { ReactNode } from "react";
+
 import type { SxProps, Theme } from "@mui/material";
+import type { TextFieldProps } from "@mui/material/TextField";
+
 import type {
-    Control,
     FieldPath,
     FieldValues,
-    RegisterOptions,
 } from "react-hook-form";
 
-/**
- * ============================================================================
- * Base Field Props
- * ============================================================================
- */
+/* ============================================================================
+ * Common
+ * ========================================================================== */
 
-export interface BaseFormFieldProps<
-    TFieldValues extends FieldValues = FieldValues,
-> {
-    /**
-     * React Hook Form field name.
-     */
-    name: FieldPath<TFieldValues>;
-
-    /**
-     * Optional label displayed above the field.
-     */
-    label?: string;
-
-    /**
-     * Optional placeholder.
-     */
-    placeholder?: string;
-
-    /**
-     * Disable the field.
-     */
-    disabled?: boolean;
-
-    /**
-     * Full width.
-     *
-     * Default: true
-     */
-    fullWidth?: boolean;
-
-    /**
-     * React Hook Form validation rules.
-     */
-    rules?: RegisterOptions<TFieldValues>;
-
-    /**
-     * Custom Material UI styles.
-     */
+export interface FormSectionProps {
+    title: string;
+    subtitle?: string;
+    children: ReactNode;
     sx?: SxProps<Theme>;
-
-    /**
-     * Helper text shown below field.
-     */
-    helperText?: ReactNode;
 }
-
-/**
- * ============================================================================
- * Text Field
- * ============================================================================
- */
-
-export interface FormTextFieldProps<
-    TFieldValues extends FieldValues = FieldValues,
-> extends BaseFormFieldProps<TFieldValues> {
-    type?: React.InputHTMLAttributes<HTMLInputElement>["type"];
-
-    autoFocus?: boolean;
-
-    autoComplete?: string;
-
-    startAdornment?: React.ReactNode;
-
-    endAdornment?: React.ReactNode;
-}
-
-/**
- * ============================================================================
- * Number Field
- * ============================================================================
- */
-
-export interface FormNumberFieldProps<
-    TFieldValues extends FieldValues = FieldValues,
-> extends BaseFormFieldProps<TFieldValues> {
-    min?: number;
-    max?: number;
-    step?: number | "any";
-}
-
-/**
- * ============================================================================
- * Select
- * ============================================================================
- */
 
 export interface SelectOption {
     label: string;
     value: string | number;
 }
 
-export interface FormSelectProps<
+/* ============================================================================
+ * Text Field
+ * ========================================================================== */
+
+export interface FormTextFieldProps<
     TFieldValues extends FieldValues = FieldValues,
-> extends BaseFormFieldProps<TFieldValues> {
-    options: SelectOption[];
+> extends Omit<
+        TextFieldProps,
+        | "name"
+        | "value"
+        | "defaultValue"
+        | "onChange"
+        | "error"
+    > {
+    name: FieldPath<TFieldValues>;
 }
 
-/**
- * ============================================================================
- * Text Area
- * ============================================================================
- */
+/* ============================================================================
+ * Number Field
+ * ========================================================================== */
+
+export interface FormNumberFieldProps<
+    TFieldValues extends FieldValues = FieldValues,
+> extends FormTextFieldProps<TFieldValues> {
+    min?: number;
+    max?: number;
+    step?: number | "any";
+}
+
+/* ============================================================================
+ * Select
+ * ========================================================================== */
+
+export interface FormSelectProps<
+    TFieldValues extends FieldValues = FieldValues,
+> {
+    name: FieldPath<TFieldValues>;
+    label?: string;
+    options: SelectOption[];
+    disabled?: boolean;
+    fullWidth?: boolean;
+    sx?: SxProps<Theme>;
+}
+
+/* ============================================================================
+ * Textarea
+ * ========================================================================== */
 
 export interface FormTextareaProps<
     TFieldValues extends FieldValues = FieldValues,
-> extends BaseFormFieldProps<TFieldValues> {
+> extends FormTextFieldProps<TFieldValues> {
     rows?: number;
 }
 
-/**
- * ============================================================================
+/* ============================================================================
  * Slider
- * ============================================================================
- */
+ * ========================================================================== */
 
 export interface FormSliderProps<
     TFieldValues extends FieldValues = FieldValues,
-> extends BaseFormFieldProps<TFieldValues> {
-    control: Control<TFieldValues>;
-
+> {
+    name: FieldPath<TFieldValues>;
+    label?: string;
     min?: number;
-
     max?: number;
-
     step?: number;
-
     marks?: boolean;
-}
-
-/**
- * ============================================================================
- * Section
- * ============================================================================
- */
-
-export interface FormSectionProps {
-    title: string;
-
-    subtitle?: string;
-
-    children: ReactNode;
-
+    disabled?: boolean;
     sx?: SxProps<Theme>;
 }
