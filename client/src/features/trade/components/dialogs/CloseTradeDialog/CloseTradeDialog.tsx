@@ -10,8 +10,8 @@ import {
   TextField,
 } from "@mui/material";
 
-import { closeTrade } from "../../services/tradeService";
-import { useTradeStore } from "../../store/tradeStore";
+import { closeTrade } from "../../../services/tradeService";
+import { useTradeStore } from "../../../store/tradeStore";
 
 interface CloseTradeDialogProps {
   open: boolean;

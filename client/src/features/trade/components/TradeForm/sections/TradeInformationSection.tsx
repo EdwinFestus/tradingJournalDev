@@ -7,13 +7,13 @@ import {
 } from "@mui/material";
 import type { UseFormRegister, FieldErrors } from "react-hook-form";
 
-import type { TradeFormData } from "../../validation/tradeSchema";
+import type { TradeFormData } from "../../../validation/tradeSchema";
 
 import {
   ACCOUNT_TYPES,
   ASSET_CLASSES,
   SOURCES,
-} from "../../constants/tradeConstants";
+} from "../../../constants/tradeConstants";
 
 interface Props {
   register: UseFormRegister<TradeFormData>;

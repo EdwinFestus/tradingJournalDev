@@ -1,4 +1,4 @@
-import api from "@/shared/lib/api";
+import api from "@/shared/api/api";
 
 import type { Trade } from "../types/trade";
 import type { CreateTradeDto } from "../types/createTrade";

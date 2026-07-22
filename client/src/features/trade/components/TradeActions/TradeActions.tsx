@@ -9,7 +9,7 @@ import {
 
 import { IconButton, Tooltip } from "@mui/material";
 
-import CloseTradeDialog from "../CloseTradeDialog";
+import CloseTradeDialog from "../dialogs/CloseTradeDialog";
 
 import type { Trade } from "../../types/trade";
 
