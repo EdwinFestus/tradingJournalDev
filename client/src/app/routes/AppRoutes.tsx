@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import Login from "../../features/auth/pages/Login"
 import Dashboard from "../../features/dashboard/pages/Dashboard";
-import TradeJournal from "../../features/trade/pages/TradeJournal";
+import TradeJournalPage from "../../features/trade/pages/TradeJournalPage";
 
 
 import ProtectedRoute from "./ProtectedRoute";
@@ -25,7 +25,7 @@ function AppRoutes() {
 
                     <Route 
                         path="/journal"
-                        element={<TradeJournal/>} 
+                        element={<TradeJournalPage/>} 
                     />
 
                     {/* <Route 
