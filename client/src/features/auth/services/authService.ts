@@ -1,4 +1,4 @@
-import api from "../../../shared/lib/api";
+import api from "../../../shared/api/api";
 
 export const loginUser = async (data: {
     email: string;

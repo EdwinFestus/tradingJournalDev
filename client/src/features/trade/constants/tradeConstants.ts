@@ -114,3 +114,18 @@ export const DEFAULT_PSYCHOLOGY = {
   discipline: 5,
   stress: 5,
 };
+
+
+export const DEFAULT_ACCOUNT_TYPE = "Demo" as const;
+
+export const DEFAULT_SOURCE = "MANUAL" as const;
+
+export const DEFAULT_ASSET_CLASS = "Forex" as const;
+
+export const DEFAULT_ORDER_TYPE = "BUY" as const;
+
+export const DEFAULT_TIMEFRAME = "15M" as const;
+
+export const DEFAULT_STRATEGY = "SMC" as const;
+
+export const DEFAULT_MARKET_CONDITION = "Trending" as const;

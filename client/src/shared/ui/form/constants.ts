@@ -36,6 +36,11 @@ export const FORM_SECTION_PADDING = 3;
 
 export const FORM_GRID_SPACING = 2;
 
+export const FORM_SECTION_GRID_SPACING =2;
+export const FORM_ACTION_MARGIN_TOP =3;
+export const FORM_SLIDER_MARKS =  true;
+
+
 /**
  * ============================================================================
  * Slider Defaults

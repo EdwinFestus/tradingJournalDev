@@ -1,13 +1,8 @@
-import {
-  Grid,
-  MenuItem,
-  Paper,
-  TextField,
-  Typography,
-} from "@mui/material";
-import type { UseFormRegister, FieldErrors } from "react-hook-form";
+import Grid from "@mui/material/Grid";
 
-import type { TradeFormData } from "../../../validation/tradeSchema";
+import FormSection from "@/shared/ui/form/FormSection";
+import FormSelect from "@/shared/ui/form/FormSelect";
+import FormTextField from "@/shared/ui/form/FormTextField";
 
 import {
   ACCOUNT_TYPES,
@@ -15,134 +10,64 @@ import {
   SOURCES,
 } from "../../../constants/tradeConstants";
 
-interface Props {
-  register: UseFormRegister<TradeFormData>;
-  errors: FieldErrors<TradeFormData>;
-}
-
-const inputSx = {
-  "& .MuiOutlinedInput-root": {
-    borderRadius: 2,
-  },
-};
-
-export default function TradeInformationSection({
-  register,
-  errors,
-}: Props) {
+export default function TradeInformationSection() {
   return (
-    <Paper
-      elevation={0}
-      sx={{
-        p: 3,
-        border: "1px solid #e5e7eb",
-        borderRadius: 3,
-      }}
-    >
-      <Typography
-        variant="h6"
-        fontWeight={700}
-        mb={3}
-      >
-        Trade Information
-      </Typography>
-
+    <FormSection title="Trade Information">
       <Grid container spacing={2}>
-
         <Grid size={{ xs: 12, md: 6 }}>
-          <TextField
+          <FormTextField
+            name="broker"
             label="Broker"
-            fullWidth
-            sx={inputSx}
-            {...register("broker")}
-            error={!!errors.broker}
-            helperText={errors.broker?.message}
           />
         </Grid>
 
         <Grid size={{ xs: 12, md: 6 }}>
-          <TextField
+          <FormTextField
+            name="accountNumber"
             label="Account Number"
-            fullWidth
-            sx={inputSx}
-            {...register("accountNumber")}
-            error={!!errors.accountNumber}
-            helperText={errors.accountNumber?.message}
           />
         </Grid>
 
         <Grid size={{ xs: 12, md: 4 }}>
-          <TextField
-            select
+          <FormSelect
+            name="accountType"
             label="Account Type"
-            fullWidth
-            defaultValue={ACCOUNT_TYPES[0]}
-            sx={inputSx}
-            {...register("accountType")}
-          >
-            {ACCOUNT_TYPES.map((item) => (
-              <MenuItem
-                key={item}
-                value={item}
-              >
-                {item}
-              </MenuItem>
-            ))}
-          </TextField>
+            options={ACCOUNT_TYPES.map((value) => ({
+              label: value,
+              value,
+            }))}
+          />
         </Grid>
 
         <Grid size={{ xs: 12, md: 4 }}>
-          <TextField
-            select
+          <FormSelect
+            name="source"
             label="Source"
-            fullWidth
-            defaultValue={SOURCES[0]}
-            sx={inputSx}
-            {...register("source")}
-          >
-            {SOURCES.map((item) => (
-              <MenuItem
-                key={item}
-                value={item}
-              >
-                {item}
-              </MenuItem>
-            ))}
-          </TextField>
+            options={SOURCES.map((value) => ({
+              label: value,
+              value,
+            }))}
+          />
         </Grid>
 
         <Grid size={{ xs: 12, md: 4 }}>
-          <TextField
-            select
+          <FormSelect
+            name="assetClass"
             label="Asset Class"
-            fullWidth
-            defaultValue={ASSET_CLASSES[0]}
-            sx={inputSx}
-            {...register("assetClass")}
-          >
-            {ASSET_CLASSES.map((item) => (
-              <MenuItem
-                key={item}
-                value={item}
-              >
-                {item}
-              </MenuItem>
-            ))}
-          </TextField>
+            options={ASSET_CLASSES.map((value) => ({
+              label: value,
+              value,
+            }))}
+          />
         </Grid>
 
         <Grid size={12}>
-          <TextField
+          <FormTextField
+            name="pair"
             label="Trading Pair"
-            fullWidth
-            sx={inputSx}
-            {...register("pair")}
-            error={!!errors.pair}
-            helperText={errors.pair?.message}
           />
         </Grid>
-
       </Grid>
-    </Paper>
+    </FormSection>
   );
 }

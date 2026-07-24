@@ -1,20 +1,3 @@
-/**
- * ============================================================================
- * Component: FormSlider
- * Path:
- * src/shared/ui/form/FormSlider/FormSlider.tsx
- *
- * Description:
- * Reusable Material UI Slider integrated with React Hook Form.
- *
- * Features:
- * - React Hook Form Controller
- * - Validation support
- * - Shared styling
- * - Generic TypeScript support
- * ============================================================================
- */
-
 import {
     Controller,
     useFormContext,
@@ -24,10 +7,18 @@ import type { FieldValues } from "react-hook-form";
 
 import {
     Box,
+    FormHelperText,
     Slider,
     Typography,
-    FormHelperText,
 } from "@mui/material";
+
+import {
+    FORM_DEBUG_PREFIX,
+    FORM_SLIDER_MARKS,
+    FORM_SLIDER_MAX,
+    FORM_SLIDER_MIN,
+    FORM_SLIDER_STEP,
+} from "../constants";
 
 import { sliderSx } from "../styles";
 import type { FormSliderProps } from "../types";
@@ -38,17 +29,17 @@ export default function FormSlider<
 >({
     name,
     label,
-    min = 0,
-    max = 100,
-    step = 1,
-    marks = false,
+    min = FORM_SLIDER_MIN,
+    max = FORM_SLIDER_MAX,
+    step = FORM_SLIDER_STEP,
+    marks = FORM_SLIDER_MARKS,
     disabled,
     sx,
 }: FormSliderProps<TFieldValues>) {
     const { control } = useFormContext<TFieldValues>();
 
     debugLog(
-        "[FORM-SLIDER-001]",
+        `${FORM_DEBUG_PREFIX}[SLIDER]`,
         `Rendering slider: ${String(name)}`
     );
 
