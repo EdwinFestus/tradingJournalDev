@@ -4,8 +4,6 @@ import {
   Search,
 } from "@mui/icons-material";
 
-import TradeDialog from "@/features/trade/components/TradeDialogs/TradeDialog";
-
 export default function TradeToolbar() {
   return (
     <section className="surface-card p-5">
@@ -23,7 +21,6 @@ export default function TradeToolbar() {
           </p>
         </div>
 
-        <TradeDialog />
       </div>
 
       <div className="mt-6 flex flex-col gap-3 xl:flex-row xl:items-center">

@@ -4,14 +4,22 @@ import Paper from "@mui/material/Paper";
 import { DataGrid } from "@mui/x-data-grid";
 
 import { useTradeStore } from "../../store/tradeStore";
-import { tradeColumns } from "./columns";
+import type { Trade } from "../../types/trade";
+import { getTradeColumns } from "./columns";
 
 interface TradeTableProps {
   search?: string;
+
+  onView?: (trade: Trade) => void;
+  onEdit?: (trade: Trade) => void;
+  onDelete?: (trade: Trade) => void;
 }
 
 export default function TradeTable({
   search = "",
+  onView,
+  onEdit,
+  onDelete,
 }: TradeTableProps) {
   const {
     trades,
@@ -23,22 +31,36 @@ export default function TradeTable({
     void fetchTrades();
   }, [fetchTrades]);
 
+  const columns = useMemo(
+    () =>
+      getTradeColumns({
+        onView,
+        onEdit,
+        onDelete,
+      }),
+    [onView, onEdit, onDelete]
+  );
+
   const filteredTrades = useMemo(() => {
     const query = search.trim().toLowerCase();
 
     if (!query) {
+
       return trades;
+
+
     }
 
+   
     return trades.filter((trade) => {
       return (
         trade.pair.toLowerCase().includes(query) ||
         trade.strategy.toLowerCase().includes(query) ||
         trade.orderType.toLowerCase().includes(query) ||
-        trade.outcome.toLowerCase().includes(query)
+        (trade.outcome ?? trade.status).toLowerCase().includes(query)
       );
     });
-  }, [trades, search]);
+  }, [search, trades]);
 
   return (
     <Paper
@@ -50,7 +72,7 @@ export default function TradeTable({
     >
       <DataGrid
         rows={filteredTrades}
-        columns={tradeColumns}
+        columns={columns}
         loading={loading}
         getRowId={(row) => row._id}
         disableRowSelectionOnClick
@@ -67,3 +89,6 @@ export default function TradeTable({
     </Paper>
   );
 }
+
+
+// console.log(filteredTrades[0]);

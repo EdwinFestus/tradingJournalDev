@@ -61,20 +61,22 @@ export default function TradeForm({
         },
     } = methods;
 
-    const onSubmit = async (
-        data: TradeFormData
-    ) => {
+const onSubmit = async (data: TradeFormData) => {
+  console.log("FORM SUBMITTED");
+  console.log(data);
 
-        try {
-            await createTrade(data);
+  try {
+    await createTrade(data);
 
-            reset();
+    console.log("Trade created");
 
-            onSuccess();
-        } catch (error) {
-            console.error(error);
-        }
-    };
+    reset();
+
+    onSuccess();
+  } catch (error) {
+    console.error(error);
+  }
+};
 
     return (
         <FormProvider {...methods}>

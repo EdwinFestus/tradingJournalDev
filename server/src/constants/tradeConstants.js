@@ -35,5 +35,5 @@ export const STRATEGIES = [
   "Range Reversal",
   "Scalping",
   "Swing Trading",
-  "Custom",
+  "Other",
 ];

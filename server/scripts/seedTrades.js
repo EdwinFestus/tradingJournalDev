@@ -6,27 +6,29 @@ import dotenv from "dotenv";
 import User from "../src/models/User.js";
 import Trade from "../src/models/Trade.js";
 
+import {
+    calculateTradeMetrics,
+} from "../src/utils/tradeCalculator.js";
+
 dotenv.config();
-
-
 
 async function seedTrades() {
     try {
+        console.log("Connecting to MongoDB...");
+
         await mongoose.connect(process.env.MONGO_URI);
 
-        console.log("Mongo Connected");
+        console.log("MongoDB Connected");
 
         const user = await User.findOne({
-             email: process.env.SEED_EMAIL,
+            email: process.env.SEED_EMAIL,
         });
 
         if (!user) {
             throw new Error(
-                `User ${process.env.SEED_EMAIL} not found.`
+                `Seed user "${process.env.SEED_EMAIL}" was not found.`
             );
         }
-
-        // console.log(`Using user: ${user.email}`);
 
         const filePath = path.join(
             process.cwd(),
@@ -35,29 +37,118 @@ async function seedTrades() {
             "trades.json"
         );
 
+        if (!fs.existsSync(filePath)) {
+            throw new Error(
+                `Trades file not found: ${filePath}`
+            );
+        }
+
         const trades = JSON.parse(
             fs.readFileSync(filePath, "utf8")
+        );
+
+        if (!Array.isArray(trades)) {
+            throw new Error(
+                "trades.json must contain an array."
+            );
+        }
+
+        console.log(
+            `Found ${trades.length} trade(s).`
         );
 
         await Trade.deleteMany({
             user: user._id,
         });
 
-        const tradesWithUser = trades.map((trade) => ({
-            ...trade,
-            user: user._id,
-        }));
-
-        await Trade.insertMany(tradesWithUser);
-
         console.log(
-            `${tradesWithUser.length} trades inserted successfully.`
+            "Existing seeded trades removed."
         );
 
-        process.exit(0);
-    } catch (err) {
-        console.error(err);
-        process.exit(1);
+        const tradesWithUser = trades.map(
+            (trade, index) => {
+                try {
+                    const metrics =
+                        calculateTradeMetrics(
+                            trade.entry,
+                            trade.stopLoss,
+                            trade.takeProfit
+                        );
+
+                    return {
+                        ...trade,
+                        user: user._id,
+
+                        riskAmount:
+                            metrics.riskAmount,
+
+                        rewardAmount:
+                            metrics.rewardAmount,
+
+                        rrRatio:
+                            metrics.rrRatio,
+
+                        /*
+                         * Keep the setup rating from
+                         * trades.json.
+                         *
+                         * Uncomment below if you ever
+                         * want RR to determine it.
+                         */
+
+                        // setupRating:
+                        //     metrics.setupRating,
+                    };
+                } catch (error) {
+                    throw new Error(
+                        `Trade #${index + 1} (${
+                            trade.pair
+                        }) failed validation.\n${error.message}`
+                    );
+                }
+            }
+        );
+
+        const insertedTrades =
+            await Trade.insertMany(
+                tradesWithUser
+            );
+
+        console.log("");
+
+        console.log(
+            "======================================"
+        );
+
+        console.log(
+            "Trade seeding completed successfully."
+        );
+
+        console.log(
+            `Inserted: ${insertedTrades.length} trade(s).`
+        );
+
+        console.log(
+            `User: ${user.email}`
+        );
+
+        console.log(
+            "======================================"
+        );
+    } catch (error) {
+        console.error("");
+
+        console.error(
+            "Trade seeding failed."
+        );
+
+        console.error(error.message);
+
+        process.exitCode = 1;
+    } finally {
+        await mongoose.disconnect();
+
+        console.log("MongoDB Disconnected");
     }
 }
 

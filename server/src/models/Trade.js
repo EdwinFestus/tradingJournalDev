@@ -5,6 +5,10 @@
     STRATEGIES,
 } from "../constants/tradeConstants.js";
 
+import { 
+    calculateTradeMetrics 
+} from "../utils/tradeCalculator.js";
+
 
     const tradeSchema = new mongoose.Schema({
         user: {
@@ -311,16 +315,27 @@ tradeSchema.pre("validate", function () {
 
 
 
-tradeSchema.pre("save", function () {
-    const risk = Math.abs(this.entry - this.stopLoss);
-    const reward = Math.abs(this.takeProfit - this.entry);
+tradeSchema.pre("save", function (next) {
+    const metrics = calculateTradeMetrics(
+        this.entry,
+        this.stopLoss,
+        this.takeProfit
+    );
 
-    this.riskAmount = risk;
-    this.rewardAmount = reward;
-    this.rrRatio =
-        risk === 0 ? 0 : Number((reward / risk).toFixed(2));
+    this.riskAmount = metrics.riskAmount;
+    this.rewardAmount = metrics.rewardAmount;
+    this.rrRatio = metrics.rrRatio;
+
+    /*
+     * Keep setupRating manual.
+     * Uncomment the line below only if you want RR
+     * to determine the rating automatically.
+     */
+
+    // this.setupRating = metrics.setupRating;
+
+    next();
 });
-
 
 
 

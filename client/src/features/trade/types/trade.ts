@@ -1,5 +1,6 @@
 export interface Trade {
   _id: string;
+  id?: string;
 
   user?: string;
 
@@ -7,14 +8,18 @@ export interface Trade {
 
   orderType: "BUY" | "SELL";
 
-  entryPrice: number;
+  entry: number;
   stopLoss: number;
-  takepnl: number;
+  takeProfit: number;
   exitPrice: number;
 
   lotSize: number;
 
-  accountType: "Personal" | "Challenge" | "Funded" | "Demo";
+  accountType:
+    | "Personal"
+    | "Challenge"
+    | "Funded"
+    | "Demo";
 
   strategy:
     | "SMC"
@@ -22,15 +27,18 @@ export interface Trade {
     | "Trendline Break"
     | "Double Top"
     | "Double Bottom"
-    | "Head & Shoulders"
+    | "Head &Shoulders"
     | "Expansion"
+    | "Liquidity Sweep"
     | "Other";
 
   marketCondition: string;
 
   mood: string;
 
-  tradingStyle: "Conservative" | "Aggressive";
+  tradingStyle:
+    | "Conservative"
+    | "Aggressive";
 
   riskAmount: number;
   rewardAmount: number;
@@ -60,17 +68,31 @@ export interface Trade {
   profitLoss: number;
 
   beforeImage: string;
-
   afterImage: string;
+
+  status:
+    | "OPEN"
+    | "CLOSED"
+    | "ARCHIVED";
 
   outcome:
     | "WIN"
     | "LOSS"
     | "BE"
-    | "OPEN"
-    | "MANUAL_CLOSE";
+    | "MANUAL_CLOSE"
+    | null;
+
+  source: string;
+
+  commission: number;
+  swap: number;
+
+  holdingTimeMinutes: number;
+
+  isClosed: boolean;
+  isDeleted: boolean;
+  isPartialClose: boolean;
 
   createdAt: string;
-
   updatedAt: string;
 }
